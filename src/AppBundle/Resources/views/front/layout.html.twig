@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}SnowTricks{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body class="{{ page|default('home') }}">
+
+    {% block html %}
+
+        <div class="content">
+            {% block content_body %}
+            {% endblock content_body %}
+        </div>
+
+        <footer>
+            {% block footer %}{% endblock footer %}
+        </footer>
+
+    {% endblock html %}
+
+    {% block javascripts %}
+    {% endblock javascripts %}
+
+</body>
+
+</html>
