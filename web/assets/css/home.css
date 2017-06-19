@@ -1,0 +1,30 @@
+#homeApp {
+    background-image: url(../img/bg.jpg);
+    background-position: 0 13%;
+    background-repeat: no-repeat;
+    padding-bottom: 3rem;
+}
+
+.title {
+    padding-top: 3vh;
+}
+
+.bigTitle, h1.bigTitle, h2.bigTitle, h3.bigTitle, .title h2 {
+    text-shadow: 2px 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.imgWrapperBottom img {
+    opacity: 0;
+    animation: surf 0.8s ease-out 0.5s forwards;
+}
+
+@keyframes surf {
+    0% {
+        opacity: 0;
+        transform: translate(10vw, -3vw);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}

@@ -21,11 +21,11 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/css/layout.css') }}" />
     <link type="text/css" rel="stylesheet" id="colors" href="{{ asset('assets/altea/css/light.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/layout.css') }}" />
+
+    {% block stylesheets %}{% endblock %}
+    
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     <script src="{{ asset('assets/altea/js/modernizr-2.6.1.min.js') }}"></script>
-
-    {% block stylesheets %}
-    {% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>

@@ -1,6 +1,10 @@
 {% set page = 'home' %}
 {% extends 'AppBundle:front:layout.html.twig' %}
 
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/home.css') }}" />
+{% endblock %}
+
 {% block menu %}
     <li>
         <a href="#about">
