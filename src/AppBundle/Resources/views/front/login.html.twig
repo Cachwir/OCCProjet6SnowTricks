@@ -1,0 +1,34 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% block content_body %}
+
+    <section class="slice color1 top-panel" id="contactSlice" >
+        <div class="container">
+            <div class="row mb40">
+                <div class="span12">
+                    <h1>Connexion</h1>
+                </div>
+                <div id="contactSlide">
+                    <div class="span12">
+
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_start(form) }}
+                            {{ form_row(form._username) }}
+                            {{ form_row(form._password) }}
+
+                            <button type="submit" class="btn">Se connecter</button>
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+

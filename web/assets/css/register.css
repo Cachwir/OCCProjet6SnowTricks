@@ -1,0 +1,22 @@
+.file-input {
+    position: relative;
+}
+.file-input .btn {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 14px 30px;
+}
+.file-input .btn-ok {
+    background-color: #54dd44;
+    padding: 10px 30px;
+    -webkit-transition: background-color 1s, width 1s;
+    -moz-transition: background-color 1s, width 1s;
+    -ms-transition: background-color 1s, width 1s;
+    -o-transition: background-color 1s, width 1s;
+    transition: background-color 1s, width 1s;
+}
+.file-input .btn-ok span:before {
+    font-size: 27px;
+}

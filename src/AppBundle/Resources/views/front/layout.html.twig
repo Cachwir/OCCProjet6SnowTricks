@@ -39,28 +39,44 @@
         <div class="container">
             <div class="row">
                 <div class="span12">
-                    <a href="{{ path('app_home') }}" class="brand">
+                    <a href="{{ path('front_home') }}" class="brand">
                         <img src="{{ asset('assets/img/logo.png') }}" alt="alteaE website template"/>
                         <span class="fixed-title">SnowTricks</span>
                     </a>
                     <nav id="mainMenu" class="scrollMenu clearfix">
                         <ul class="nav clearfix">
+                            {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <a href="#">
+                                        Bonjour
+                                        {{ app.user.pseudonym }} !
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="active">
-                                <a href="{{ path('app_home') }}">
+                                <a href="{{ path('front_home') }}">
                                     Accueil
                                 </a>
                             </li>
                             {% block menu %}{% endblock %}
-                            <li>
-                                <a href="#">
-                                    Connexion
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Inscription
-                                </a>
-                            </li>
+                            {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <a href="{{ path("security_logout") }}">
+                                        Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path("security_login") }}">
+                                        Connexion
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("security__register") }}">
+                                        Inscription
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -78,7 +94,7 @@
             <div class="footer-sections">
                 <div>
                     <span>Copyright © 2017
-                        <a href="{{ path('app_home') }}">
+                        <a href="{{ path('front_home') }}">
                             SnowTricks
                         </a>
                         / Tous droits réservés.
