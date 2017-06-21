@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as CustomAssert;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration"})
  * @UniqueEntity(fields={"pseudonym"}, message="Ce pseudonyme est déjà pris.")
  */
 class User implements UserInterface
@@ -61,6 +63,11 @@ class User implements UserInterface
      * @var UploadedFile
      */
     protected $plainAvatar;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $reinitialisationToken;
 
 
     /**
@@ -203,6 +210,26 @@ class User implements UserInterface
         $this->plainAvatar = $plainAvatar;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getReinitialisationToken()
+    {
+        return $this->reinitialisationToken;
+    }
+
+    /**
+     * @param mixed $reinitialisationToken
+     */
+    public function setReinitialisationToken($reinitialisationToken)
+    {
+        $this->reinitialisationToken = $reinitialisationToken;
+    }
+
+    public function generateReinitialisationToken()
+    {
+        $this->reinitialisationToken = uniqid("reinit");
+    }
 
 
 }

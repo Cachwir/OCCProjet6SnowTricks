@@ -20,16 +20,3 @@
 .file-input .btn-ok span:before {
     font-size: 27px;
 }
-
-.form-error input {
-    border-color: #e9322d;
-    -webkit-box-shadow: 0 0 6px #f8b9b7;
-    -moz-box-shadow: 0 0 6px #f8b9b7;
-    box-shadow: 0 0 6px #f8b9b7;
-}
-.error-messages {
-    transform: translatey(-1.2em);
-}
-.error-message {
-    color: #e9322d;
-}

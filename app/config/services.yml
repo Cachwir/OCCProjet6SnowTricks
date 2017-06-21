@@ -50,3 +50,16 @@ services:
           - '%path_to_avatars%'
         tags:
             - { name: doctrine.event_subscriber }
+
+    validator.user_email_exists:
+        class: AppBundle\Validator\Constraints\UserEmailExistsValidator
+        autowire: true
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.mailer:
+        class: AppBundle\Services\MailHandler
+        public: true
+        autowire: true
+        calls:
+            - [ setContainer, [ '@service_container' ] ]

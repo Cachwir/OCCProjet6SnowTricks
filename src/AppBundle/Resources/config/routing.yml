@@ -18,10 +18,15 @@ security_logout:
     path:      /logout
     defaults: { _controller: AppBundle:Security:logout }
 
-security__register:
+security_register:
     path:      /register
     defaults: { _controller: AppBundle:Security:register }
+
+security_reinitialise_password:
+    path:      /reinitialise-password/{email}/{token}
+    defaults: { _controller: AppBundle:Security:reinitialisePassword }
 
 front_add_trick:
     path:      /trick/add
     defaults: { _controller: AppBundle:Front:addTrick }
+

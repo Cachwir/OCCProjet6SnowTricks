@@ -2,16 +2,21 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use AppBundle\Form\ForgotPasswordForm;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\UserRegistrationForm;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
 {
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
+    public function loginAction(Request $request, AuthenticationUtils $authUtils, EntityManagerInterface $em)
     {
         // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
@@ -19,12 +24,46 @@ class SecurityController extends Controller
         // last username entered by the user
         $lastUsername = $authUtils->getLastUsername();
 
-        $form = $this->createForm(LoginForm::class, [
+        $connectionForm = $this->createForm(LoginForm::class, [
             '_username' => $lastUsername,
         ]);
 
+        $forgotPasswordForm = $this->createForm(ForgotPasswordForm::class);
+
+        $forgotPasswordForm->handleRequest($request);
+
+        if ($forgotPasswordForm->isSubmitted() && $forgotPasswordForm->isValid()) {
+
+            $email = $forgotPasswordForm->getData()['email'];
+
+            $user = $em->getRepository('AppBundle:User')
+                ->findOneBy(['email' => $email]);
+
+            if (!$user instanceof User) {
+                throw new UsernameNotFoundException();
+            }
+
+            $user->generateReinitialisationToken();
+
+            // sends an email
+            $result = $this->get("app.mailer")->sendPasswordReinitialisationMail($user);
+
+            if ($result === 1) {
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    sprintf('Un email a été envoyé à %s. Suis ses instructions pour réinitialiser ton mot de passe.', $email)
+                );
+            } else {
+                $error = $result;
+            }
+        }
+
         return $this->render('AppBundle:front:login.html.twig', array(
-            'form' => $form->createView(),
+            'connectionForm' => $connectionForm->createView(),
+            'forgotPasswordForm' => $forgotPasswordForm->createView(),
             'error'         => $error,
         ));
     }
@@ -62,5 +101,12 @@ class SecurityController extends Controller
         return $this->render('AppBundle:front:register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function reinitialisePasswordAction(User $user, $token, Request $request, EntityManagerInterface $em)
+    {
+        // do stuff and shit, like checking if the $token is good
+
+        return new Response("Yaaay");
     }
 }
