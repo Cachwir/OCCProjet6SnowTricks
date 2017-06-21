@@ -26,11 +26,13 @@ class UserRegistrationForm extends AbstractType
         $builder
             ->add('email', RepeatedType::class, [
                 'type' => EmailType::class,
+                'invalid_message' => 'Les deux e-mails doivent être identiques.',
                 'first_options'  => array('label' => 'E-mail'),
                 'second_options' => array('label' => 'E-mail (confirmation)'),
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Mot de passe (confirmation)'),
             ])->add('pseudonym', TextType::class, [

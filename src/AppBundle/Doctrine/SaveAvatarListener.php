@@ -75,5 +75,6 @@ class SaveAvatarListener implements EventSubscriber
         }
 
         $entity->setAvatar($filename);
+        $entity->setPlainAvatar(null);
     }
 }

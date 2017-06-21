@@ -43,7 +43,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
-     * @Assert\Image()
      */
     protected $avatar;
 
@@ -58,6 +57,7 @@ class User implements UserInterface
     /**
      * A non-persisted field that's used to create the avatar.
      *
+     * @Assert\Image()
      * @var UploadedFile
      */
     protected $plainAvatar;
@@ -198,7 +198,7 @@ class User implements UserInterface
     /**
      * @param UploadedFile $plainAvatar
      */
-    public function setPlainAvatar(UploadedFile $plainAvatar)
+    public function setPlainAvatar($plainAvatar)
     {
         $this->plainAvatar = $plainAvatar;
     }

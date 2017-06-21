@@ -1,5 +1,7 @@
 {% extends 'AppBundle:front:layout.html.twig' %}
 
+{% form_theme form 'AppBundle:forms:defaultFormTheme.html.twig' %}
+
 {% block stylesheets %}
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/register.css') }}" />
 {% endblock %}
@@ -36,10 +38,14 @@
                                     {{ form_row(form.pseudonym) }}
                                 </div>
                                 <div class="span6 clearfix">
-                                    {{ form_row(form.plainAvatar, {attr: {style: "display: none;"}}) }}
-                                    <div class="file-input">
-                                        <input type="text" id="plain-avatar" disabled>
-                                        <label class="btn" for="{{ form.plainAvatar.vars.id }}">Fichier</label>
+                                    <div class="{{ form.plainAvatar.vars.errors.count() ? 'form-error' : '' }}">
+                                        {{- form_label(form.plainAvatar) -}}
+                                        {{- form_widget(form.plainAvatar, {attr: {style: "display: none;"}}) -}}
+                                        <div class="file-input">
+                                            <input type="text" id="plain-avatar" disabled>
+                                            <label class="btn" for="{{ form.plainAvatar.vars.id }}">Fichier</label>
+                                        </div>
+                                        {{- form_errors(form.plainAvatar) -}}
                                     </div>
                                 </div>
                             </div>
