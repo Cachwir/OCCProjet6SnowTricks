@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as CustomAssert;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
@@ -24,6 +23,11 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $updatedAt;
 
     /**
      * @Assert\NotBlank()
@@ -49,15 +53,24 @@ class User implements UserInterface
     protected $avatar;
 
     /**
-     * A non-persisted field that's used to create the encoded password.
+     * A non-persisted field used to create the encoded password.
      *
-     * @Assert\NotBlank(groups={"Registration", "Reinitialisation"})
+     * @Assert\NotBlank(groups={"Registration", "Reinitialisation", "ChangePassword"})
      * @var null|string
      */
     protected $plainPassword;
 
     /**
-     * A non-persisted field that's used to create the avatar.
+     * A non-persisted field used to try and compare with the password.
+     *
+     * @Assert\NotBlank(groups={"ComparePassword"})
+     * @CustomAssert\IsUserPassword(groups={"ComparePassword"})
+     * @var null|string
+     */
+    protected $confirmationPassword;
+
+    /**
+     * A non-persisted field used to create the avatar.
      *
      * @Assert\Image()
      * @var UploadedFile
@@ -85,6 +98,28 @@ class User implements UserInterface
     {
         $this->id = $id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function setUpdatedAtNow()
+    {
+        $this->setUpdatedAt(date("d/m/Y H:i:s"));
+    }
+
 
     /**
      * @return mixed
@@ -148,19 +183,34 @@ class User implements UserInterface
     public function setPlainPassword(string $plainPassword)
     {
         $this->plainPassword = $plainPassword;
-        // forces the object to look "dirty" to Doctrine. Avoids
-        // Doctrine *not* saving this entity, if only plainPassword changes
-        $this->password = null;
     }
 
     public function getSalt()
     {
+        // bcrypt used so a salt is not needed
     }
 
     public function eraseCredentials()
     {
         $this->plainPassword = null;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmationPassword()
+    {
+        return $this->confirmationPassword;
+    }
+
+    /**
+     * @param null|string $confirmationPassword
+     */
+    public function setConfirmationPassword($confirmationPassword)
+    {
+        $this->confirmationPassword = $confirmationPassword;
+    }
+
 
     /**
      * @return mixed

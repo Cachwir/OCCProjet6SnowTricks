@@ -37,6 +37,7 @@ services:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true
 
+    # Doctrine listeners
     app.doctrine.hash_password_listener:
         class: AppBundle\Doctrine\HashPasswordListener
         autowire: true
@@ -48,18 +49,36 @@ services:
         arguments:
           - '%kernel.root_dir%'
           - '%path_to_avatars%'
+          - '@app.imageresizer'
         tags:
             - { name: doctrine.event_subscriber }
 
+    app.doctrine.updated_at_listener:
+        class: AppBundle\Doctrine\UpdatedAtListener
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    # Form validators
     validator.user_email_exists:
         class: AppBundle\Validator\Constraints\UserEmailExistsValidator
         autowire: true
         tags:
             - { name: validator.constraint_validator }
 
+    validator.is_user_password:
+        class: AppBundle\Validator\Constraints\IsUserPasswordValidator
+        autowire: true
+        tags:
+            - { name: validator.constraint_validator }
+
+    # Other services
     app.mailer:
         class: AppBundle\Services\MailHandler
         public: true
         autowire: true
         calls:
             - [ setContainer, [ '@service_container' ] ]
+
+    app.imageresizer:
+        class: AppBundle\Services\ImageResizer
+        public: true

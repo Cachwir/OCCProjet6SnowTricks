@@ -2,7 +2,7 @@
 
 namespace AppBundle\Security;
 
-use AppBundle\Form\LoginForm;
+use AppBundle\Form\User\LoginForm;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;

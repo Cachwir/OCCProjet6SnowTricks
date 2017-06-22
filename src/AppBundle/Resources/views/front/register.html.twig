@@ -1,5 +1,7 @@
 {% extends 'AppBundle:front:layout.html.twig' %}
 
+{% form_theme form 'AppBundle:forms:defaultFormTheme.html.twig' %}
+
 {% block stylesheets %}
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/register.css') }}" />
 {% endblock %}

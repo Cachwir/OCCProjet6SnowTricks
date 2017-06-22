@@ -6,7 +6,7 @@
  * Time: 19:38
  */
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\User;
 
 
 use AppBundle\Entity\User;
@@ -19,27 +19,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserRegistrationForm extends AbstractType
+class UserEmailForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('confirmationPassword', PasswordType::class, [
+                'label'     => 'Mot de passe actuel',
+            ])
             ->add('email', RepeatedType::class, [
                 'type' => EmailType::class,
                 'invalid_message' => 'Les deux e-mails doivent être identiques.',
                 'first_options'  => array('label' => 'E-mail'),
                 'second_options' => array('label' => 'E-mail (confirmation)'),
-            ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les deux mots de passe doivent être identiques.',
-                'first_options'  => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Mot de passe (confirmation)'),
-            ])->add('pseudonym', TextType::class, [
-                'label'     => 'Pseudonyme',
-            ])->add('plainAvatar', FileType::class, [
-                'label'     => 'Avatar',
-                'required'  => false,
             ]);
     }
 
@@ -47,7 +39,7 @@ class UserRegistrationForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['Default', 'Registration'],
+            'validation_groups' => ['Default', 'ComparePassword'],
         ]);
     }
 

@@ -26,6 +26,10 @@ security_reinitialise_password:
     path:      /reinitialise-password/{email}/{token}
     defaults: { _controller: AppBundle:Security:reinitialisePassword }
 
+security_parameters:
+    path:      /parameters
+    defaults: { _controller: AppBundle:Security:parameters }
+
 front_add_trick:
     path:      /trick/add
     defaults: { _controller: AppBundle:Front:addTrick }

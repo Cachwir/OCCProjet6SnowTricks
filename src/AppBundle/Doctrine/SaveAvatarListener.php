@@ -10,6 +10,7 @@ namespace AppBundle\Doctrine;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Services\ImageResizer;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -22,10 +23,15 @@ class SaveAvatarListener implements EventSubscriber
      * @var string
      */
     protected $pathToAvatars;
+    /**
+     * @var ImageResizer
+     */
+    private $imageResizer;
 
-    public function __construct($rootDir, $pathToAvatars)
+    public function __construct($rootDir, $pathToAvatars, ImageResizer $imageResizer)
     {
         $this->pathToAvatars = $rootDir . "/../web/" . $pathToAvatars;
+        $this->imageResizer = $imageResizer;
     }
 
     public function getSubscribedEvents()
@@ -65,8 +71,9 @@ class SaveAvatarListener implements EventSubscriber
         }
 
         // saves the new avatar
-        $filename = uniqid() . "." . $entity->getPlainAvatar()->guessExtension();
-        $file = $entity->getPlainAvatar()->move( $this->pathToAvatars, $filename);
+        $filename = uniqid();
+        $extension = $entity->getPlainAvatar()->guessExtension();
+        $this->imageResizer->resizeImage($entity->getPlainAvatar(), $this->pathToAvatars . "/", $filename, 300, 300);
 
         // deletes the old avatar
         $old_filename = $entity->getAvatar();
@@ -74,7 +81,7 @@ class SaveAvatarListener implements EventSubscriber
             @unlink($this->pathToAvatars . "/" . $old_filename);
         }
 
-        $entity->setAvatar($filename);
+        $entity->setAvatar($filename . '.' . $extension);
         $entity->setPlainAvatar(null);
     }
 }

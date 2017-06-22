@@ -1,0 +1,174 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% form_theme pseudonymForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+{% form_theme emailForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+{% form_theme passwordForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+{% form_theme avatarForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/parameters.css') }}" />
+{% endblock %}
+
+{% block content_body %}
+
+    <section class="slice color1 top-panel" id="contactSlice" >
+        <div class="container">
+            <div class="row mb40">
+                <div class="span12">
+                    <h1>Paramètres</h1>
+                </div>
+                <div>
+                    <div class="span12">
+                        <p>
+                            Sur cet espace, tu peux consulter et modifier tes informations.<br>
+                            Pour modifier ton adresse email ou ton mot de passe, il te sera demandé de réentrer ton mot de passe.
+                        </p>
+
+                        <hr>
+
+                        {{ form_start(pseudonymForm) }}
+                            <div class="row {{ pseudonymForm.pseudonym.vars.errors.count() ? 'form-error' : '' }}">
+                                <div class="span12">
+                                    <h3>{{ pseudonymForm.pseudonym.vars.label }}</h3>
+                                </div>
+                                <div class="span12">
+                                    <h3>{{ form_label(pseudonymForm.pseudonym) }}</h3>
+                                </div>
+                                <div class="span6 clearfix">
+                                    {{ form_widget(pseudonymForm.pseudonym) }}
+                                </div>
+                                <div class="span6 clearfix">
+                                    <button type="submit" class="btn">Modifier</button>
+                                </div>
+                                <div class="span12">
+                                    {{ form_errors(pseudonymForm.pseudonym) }}
+                                </div>
+                            </div>
+                        {{ form_end(pseudonymForm) }}
+
+                        <hr>
+
+                        {{ form_start(emailForm) }}
+                            <div class="row">
+                                <div class="span12">
+                                    <h3>{{ emailForm.email.first.vars.label }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span6 clearfix">
+                                    {{ form_row(emailForm.email.first) }}
+                                </div>
+                                <div class="span6 clearfix">
+                                    {{ form_row(emailForm.email.second) }}
+                                </div>
+                            </div>
+                            <div class="row {{ emailForm.confirmationPassword.vars.errors.count() ? 'form-error' : '' }}">
+                                <div class="span12">
+                                    <h3>{{ form_label(emailForm.confirmationPassword) }}</h3>
+                                </div>
+                                <div class="span6 clearfix">
+                                    {{ form_widget(emailForm.confirmationPassword) }}
+                                </div>
+                                <div class="span6 clearfix">
+                                    <button type="submit" class="btn">Modifier</button>
+                                </div>
+                                <div class="span12">
+                                    {{ form_errors(emailForm.confirmationPassword) }}
+                                </div>
+                            </div>
+                        {{ form_end(emailForm) }}
+
+                        <hr>
+
+                        {{ form_start(passwordForm) }}
+                            <div class="row">
+                                <div class="span12">
+                                    <h3>{{ passwordForm.plainPassword.first.vars.label }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span6 clearfix">
+                                    {{ form_row(passwordForm.plainPassword.first) }}
+                                </div>
+                                <div class="span6 clearfix">
+                                    {{ form_row(passwordForm.plainPassword.second) }}
+                                </div>
+                            </div>
+                            <div class="row {{ passwordForm.confirmationPassword.vars.errors.count() ? 'form-error' : '' }}">
+                                <div class="span12">
+                                    <h3>{{ form_label(passwordForm.confirmationPassword) }}</h3>
+                                </div>
+                                <div class="span6 clearfix">
+                                    {{ form_widget(passwordForm.confirmationPassword) }}
+                                </div>
+                                <div class="span6 clearfix">
+                                    <button type="submit" class="btn">Modifier</button>
+                                </div>
+                                <div class="span12">
+                                    {{ form_errors(passwordForm.confirmationPassword) }}
+                                </div>
+                            </div>
+                        {{ form_end(passwordForm) }}
+
+                        <hr>
+
+                        {{ form_start(avatarForm) }}
+                            <div class="row">
+                                <div class="span12">
+                                    <h3>{{ avatarForm.plainAvatar.vars.label }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span12 thumbnail-container">
+                                    <a href="#" class="thumbnail">
+                                        <img src="{{ pathToAvatars ~ "/" }}{{ user.avatar ? user.avatar : "../default_avatar.png" }}" alt="avatar">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="{{ avatarForm.plainAvatar.vars.errors.count() ? 'form-error' : '' }}">
+                                    <div class="span12">
+                                        {{ form_label(avatarForm.plainAvatar) -}}
+                                    </div>
+                                    {{ form_widget(avatarForm.plainAvatar, {attr: {style: "display: none;"}}) -}}
+                                    <div class="span6 clearfix">
+                                        <div class="file-input">
+                                            <input type="text" id="plain-avatar" disabled>
+                                            <label class="btn" for="{{ avatarForm.plainAvatar.vars.id }}">Fichier</label>
+                                        </div>
+                                    </div>
+                                    <div class="span6 clearfix">
+                                        <button type="submit" class="btn">Modifier</button>
+                                    </div>
+                                    <div class="span12">
+                                        {{- form_errors(avatarForm.plainAvatar) -}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_end(avatarForm) }}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function() {
+            var $avatarInput = $('#{{ avatarForm.plainAvatar.vars.id }}');
+            $avatarInput.change(function() {
+                $('#plain-avatar').attr("placeholder", "Chargé et prêt à être envoyé !");
+                $('#plain-avatar + .btn').text("").html('<span class="icon-ok-circle"></span>').addClass("btn-ok");
+            });
+            $('.thumbnail').click(function (e) {
+                e.preventDefault();
+            });
+        }());
+    </script>
+
+{% endblock %}

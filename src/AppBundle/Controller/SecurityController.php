@@ -3,15 +3,17 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\ForgotPasswordForm;
-use AppBundle\Form\LoginForm;
-use AppBundle\Form\ReinitialisePasswordForm;
-use AppBundle\Form\UserRegistrationForm;
+use AppBundle\Form\User\ForgotPasswordForm;
+use AppBundle\Form\User\LoginForm;
+use AppBundle\Form\User\ReinitialisePasswordForm;
+use AppBundle\Form\User\UserAvatarForm;
+use AppBundle\Form\User\UserEmailForm;
+use AppBundle\Form\User\UserPasswordForm;
+use AppBundle\Form\User\UserPseudonymForm;
+use AppBundle\Form\User\UserRegistrationForm;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -123,7 +125,7 @@ class SecurityController extends Controller
 
             $this->addFlash(
                 'success',
-                sprintf('Bonne nouvelle %s ! Ton mot de passe a été modifié avec succès ! En prime, on t\'a reconnecté, si c\'est pas beau tout ça.', $user->getPseudonym())
+                sprintf('Ton mot de passe a été modifié avec succès ! Tu es maintenant connecté(e).', $user->getPseudonym())
             );
 
             return $this->get('security.authentication.guard_handler')
@@ -138,5 +140,54 @@ class SecurityController extends Controller
         return $this->render('AppBundle:front:passwordReinitilisation.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function parametersAction(Request $request, EntityManagerInterface $em)
+    {
+        $sessionUser = $this->getUser();
+        $user = $em->getRepository('AppBundle:User')->find($sessionUser->getId());
+
+        $forms = [
+            "emailForm" => $this->createForm(UserEmailForm::class, $user),
+            "passwordForm" => $this->createForm(UserPasswordForm::class, $user),
+            "pseudonymForm" => $this->createForm(UserPseudonymForm::class, $user),
+            "avatarForm" => $this->createForm(UserAvatarForm::class, $user),
+        ];
+
+        $template_params = [
+            "user" => $user,
+            "pathToAvatars" => "/" . $this->getParameter("path_to_avatars"),
+        ];
+
+        foreach ($forms as $name => $form) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $user = $form->getData();
+
+                    /**
+                     * @var User $user
+                     */
+                    $user->setUpdatedAtNow();
+
+                    $em->persist($user);
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        sprintf('Informations modifiées avec succès !')
+                    );
+
+                    return $this->redirectToRoute("security_parameters");
+                }
+
+                $em->refresh($user);
+            }
+
+            $template_params[$name] = $form->createView();
+        }
+
+        return $this->render('AppBundle:front:userParameters.html.twig', $template_params);
     }
 }

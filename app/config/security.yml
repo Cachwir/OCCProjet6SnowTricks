@@ -15,7 +15,10 @@ security:
                 property: email
 
     access_control:
-        - { path: /trick/add, roles: ROLE_USER }
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /logout, roles: ROLE_USER }
+        - { path: /parameters, roles: ROLE_USER }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

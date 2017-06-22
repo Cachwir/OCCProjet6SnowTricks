@@ -20,7 +20,6 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UserEmailExistsValidator extends ConstraintValidator
 {
-    public $message = 'Aucun utilisateur n\'a été trouvé avec l\'adresse "{{ string }}".';
     /**
      * @var EntityManager
      */

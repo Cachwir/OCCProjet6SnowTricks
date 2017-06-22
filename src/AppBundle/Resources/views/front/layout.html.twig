@@ -47,7 +47,7 @@
                         <ul class="nav clearfix">
                             {% if is_granted('ROLE_USER') %}
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path("security_parameters") }}">
                                         Bonjour
                                         {{ app.user.pseudonym }} !
                                     </a>
