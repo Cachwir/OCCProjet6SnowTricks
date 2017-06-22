@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Form\ForgotPasswordForm;
 use AppBundle\Form\LoginForm;
+use AppBundle\Form\ReinitialisePasswordForm;
 use AppBundle\Form\UserRegistrationForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -106,7 +107,36 @@ class SecurityController extends Controller
     public function reinitialisePasswordAction(User $user, $token, Request $request, EntityManagerInterface $em)
     {
         // do stuff and shit, like checking if the $token is good
+        if ($user->getReinitialisationToken() != $token) {
+            throw new \Exception("Le token fourni est invalide");
+        }
 
-        return new Response("Yaaay");
+        $form = $this->createForm(ReinitialisePasswordForm::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            $user->setReinitialisationToken(null);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                sprintf('Bonne nouvelle %s ! Ton mot de passe a été modifié avec succès ! En prime, on t\'a reconnecté, si c\'est pas beau tout ça.', $user->getPseudonym())
+            );
+
+            return $this->get('security.authentication.guard_handler')
+                ->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $this->get('app.security.login_form_authenticator'),
+                    'main'
+                );
+        }
+
+        return $this->render('AppBundle:front:passwordReinitilisation.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

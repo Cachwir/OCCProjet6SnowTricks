@@ -51,7 +51,7 @@ class User implements UserInterface
     /**
      * A non-persisted field that's used to create the encoded password.
      *
-     * @Assert\NotBlank(groups={"Registration"})
+     * @Assert\NotBlank(groups={"Registration", "Reinitialisation"})
      * @var null|string
      */
     protected $plainPassword;
@@ -65,7 +65,7 @@ class User implements UserInterface
     protected $plainAvatar;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $reinitialisationToken;
 
