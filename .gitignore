@@ -1,0 +1,23 @@
+/.web-server-pid
+/app/config/parameters.yml
+/build/
+/phpunit.xml
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+/vendor/
+/web/bundles/
+/web/assets/img/avatars/*
+!/web/assets/img/avatars/.gitkeep
+Supprimerait .idea/
+Supprimerait app/DoctrineMigrations/
+Supprimerait app/Resources/
+Supprimerait web/assets/altea/js-plugin/modern-slide-in/__MACOSX/

@@ -39,28 +39,44 @@
         <div class="container">
             <div class="row">
                 <div class="span12">
-                    <a href="{{ path('app_home') }}" class="brand">
+                    <a href="{{ path('front_home') }}" class="brand">
                         <img src="{{ asset('assets/img/logo.png') }}" alt="alteaE website template"/>
                         <span class="fixed-title">SnowTricks</span>
                     </a>
                     <nav id="mainMenu" class="scrollMenu clearfix">
                         <ul class="nav clearfix">
+                            {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <a href="{{ path("security_parameters") }}">
+                                        Bonjour
+                                        {{ app.user.pseudonym }} !
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="active">
-                                <a href="{{ path('app_home') }}">
+                                <a href="{{ path('front_home') }}">
                                     Accueil
                                 </a>
                             </li>
                             {% block menu %}{% endblock %}
-                            <li>
-                                <a href="#">
-                                    Connexion
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Inscription
-                                </a>
-                            </li>
+                            {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <a href="{{ path("security_logout") }}">
+                                        Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path("security_login") }}">
+                                        Connexion
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("security_register") }}">
+                                        Inscription
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -68,6 +84,12 @@
         </div>
     </header>
     <!-- header -->
+
+    <!-- flash messages -->
+    <div class="flash_messages">
+
+    </div>
+    <!-- /flash messages -->
 
     {% block content_body %}
     {% endblock content_body %}
@@ -78,7 +100,7 @@
             <div class="footer-sections">
                 <div>
                     <span>Copyright © 2017
-                        <a href="{{ path('app_home') }}">
+                        <a href="{{ path('front_home') }}">
                             SnowTricks
                         </a>
                         / Tous droits réservés.
@@ -118,6 +140,35 @@
 
 <!-- Custom  -->
 <script type="text/javascript" src="{{ asset('assets/altea/js/custom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/layout_utilities.js') }}"></script>
+
+<script>
+    jQuery(document).ready(function() {
+
+        "use strict";
+
+        var flashbags = {{ app.session.flashBag.all|json_encode()|raw }};
+
+        for (var type in flashbags)
+        {
+            var bag = flashbags[type];
+            var flash_message = "";
+
+            for (var i = 0; i < bag.length; i++)
+            {
+                if (i != 0) {
+                    flash_message += "<br>";
+                }
+
+                flash_message += bag[i];
+            }
+
+            if (flash_message) {
+                displayFlash(type, flash_message);
+            }
+        }
+    });
+</script>
 
 {% block javascripts %}
 {% endblock javascripts %}

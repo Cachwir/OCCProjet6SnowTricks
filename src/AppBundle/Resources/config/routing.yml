@@ -6,6 +6,31 @@
 #                                                       #
 # ===================================================== #
 
-app_home:
+front_home:
     path:      /
     defaults: { _controller: AppBundle:Front:home }
+
+security_login:
+    path:      /login
+    defaults: { _controller: AppBundle:Security:login }
+
+security_logout:
+    path:      /logout
+    defaults: { _controller: AppBundle:Security:logout }
+
+security_register:
+    path:      /register
+    defaults: { _controller: AppBundle:Security:register }
+
+security_reinitialise_password:
+    path:      /reinitialise-password/{email}/{token}
+    defaults: { _controller: AppBundle:Security:reinitialisePassword }
+
+security_parameters:
+    path:      /parameters
+    defaults: { _controller: AppBundle:Security:parameters }
+
+front_add_trick:
+    path:      /trick/add
+    defaults: { _controller: AppBundle:Front:addTrick }
+

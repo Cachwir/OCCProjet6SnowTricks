@@ -1,0 +1,5 @@
+AppBundle\Entity\User:
+  user_{1..10}:
+    email: cachwir+<current()>@gmx.com
+    plainPassword: iliketurtles
+    pseudonym: Agent_<current()>

@@ -18,6 +18,10 @@
     animation: surf 0.8s ease-out 0.5s forwards;
 }
 
+.top-panel {
+    padding-top: 8.5rem !important;
+}
+
 @keyframes surf {
     0% {
         opacity: 0;

@@ -1,0 +1,68 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% form_theme forgotPasswordForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+{% form_theme connectionForm 'AppBundle:forms:defaultFormTheme.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/login.css') }}" />
+{% endblock %}
+
+{% block content_body %}
+
+    <section class="slice color1 top-panel" id="contactSlice" >
+        <div class="container">
+            <div class="row mb40">
+                <div class="span12">
+                    <h1>Connexion</h1>
+                </div>
+                <div id="contactSlide">
+                    <div class="span12">
+
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_start(connectionForm) }}
+                            {{ form_row(connectionForm._username) }}
+                            {{ form_row(connectionForm._password) }}
+
+                            <button type="submit" class="btn">Se connecter</button>
+                        {{ form_end(connectionForm) }}
+
+                        <a href="#" id="forgot-password-toggle">Mot de passe oublié ?</a>
+
+                        <div class="forgot-password-form {{ forgotPasswordForm.email.vars.errors.count() ? 'has-errors' : '' }}">
+                            <p>Pour réinitialiser ton mot de passe, entre ton adresse e-mail et suis les étapes qui seront spécifiées dans le mail que tu recevras.</p>
+                            {{ form_start(forgotPasswordForm) }}
+                                {{ form_row(forgotPasswordForm.email) }}
+
+                                <button type="submit" class="btn">Réinitialiser le mot de passe</button>
+                            {{ form_end(forgotPasswordForm) }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        $(function() {
+            $('#forgot-password-toggle').click(function(e) {
+                e.preventDefault();
+                $forgotPasswordForm = $('.forgot-password-form');
+                $forgotPasswordForm.toggle("slow");
+            });
+        }());
+
+    </script>
+
+{% endblock %}
+
