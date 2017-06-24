@@ -1,0 +1,11 @@
+# src/AppBundle/Resources/config/routing.yml
+
+# ===================================================== #
+#                                                       #
+# #################### FRONT END ###################### #
+#                                                       #
+# ===================================================== #
+
+app_home:
+    path:      /
+    defaults: { _controller: AppBundle:Front:home }

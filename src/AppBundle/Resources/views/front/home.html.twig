@@ -1,0 +1,57 @@
+{% set page = 'home' %}
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/home.css') }}" />
+{% endblock %}
+
+{% block menu %}
+    <li>
+        <a href="#about">
+            Figures
+        </a>
+    </li>
+{% endblock %}
+
+{% block content_body %}
+
+    <!-- main content -->
+    <section class="clearfix bgFullScreen top-panel " id="homeApp">
+        <div class="container">
+            <div class="row">
+                <div class="span4">
+                    <div class="imgWrapperBottom">
+                        <img src="{{ asset('assets/img/snowboarder.png') }}" alt="Altea Responsive App Landing Page"/>
+                    </div>
+                </div>
+                <div class="span7 offset1 title">
+                    <h1 class="bigTitle">SnowTricks</h1>
+                    <h2>Maîtrisez la neige</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="color1 slice" id="quoteWrapper">
+        <div class="container">
+            <div class="ctaBox clearfix">
+                <div class="row-fluid">
+                    <div class="span8">
+                        <blockquote>
+                            SnowTricks, c'est l'annuaire nouvelle génération des tricks de snowboard.<br>
+                            Novice, expert, quelque soit votre niveau, découvrez, faites découvrir et discutez autour de vos tricks préférés !
+                        </blockquote>
+                    </div>
+                    <div class="span4"> <a class="btn btn-large" title="" href="#"> Découvrez l'annuaire</a> </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end content -->
+    <nav class="arrowsNav">
+        <a href="#homeApp" class="navUp color4">
+            <i class="icon-up-open"></i>
+        </a>
+    </nav>
+
+{% endblock %}
