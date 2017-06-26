@@ -34,3 +34,6 @@ front_add_trick:
     path:      /trick/add
     defaults: { _controller: AppBundle:Front:addTrick }
 
+front_trick:
+    path:      /trick/{id}
+    defaults: { _controller: AppBundle:Front:trick }

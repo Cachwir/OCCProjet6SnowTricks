@@ -12,10 +12,10 @@ use AppBundle\Validator\Constraints as CustomAssert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration"})
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration", "ChangeEmail"})
  * @UniqueEntity(fields={"pseudonym"}, message="Ce pseudonyme est déjà pris.")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -72,7 +72,7 @@ class User implements UserInterface
     /**
      * A non-persisted field used to create the avatar.
      *
-     * @Assert\Image()
+     * @Assert\Image(maxSize = "2048k")
      * @var UploadedFile
      */
     protected $plainAvatar;
@@ -282,4 +282,29 @@ class User implements UserInterface
     }
 
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->pseudonym,
+            $this->password,
+            $this->avatar,
+            $this->reinitialisationToken,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->pseudonym,
+            $this->password,
+            $this->avatar,
+            $this->reinitialisationToken,
+            ) = unserialize($serialized);
+    }
 }

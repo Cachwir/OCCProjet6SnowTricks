@@ -9,6 +9,7 @@
 namespace AppBundle\Doctrine;
 
 
+use AppBundle\Entity\TrickPost;
 use AppBundle\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -25,7 +26,7 @@ class UpdatedAtListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof User) {
+        if (!$entity instanceof User && !$entity instanceof TrickPost) {
             return;
         }
 
@@ -35,7 +36,7 @@ class UpdatedAtListener implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof User) {
+        if (!$entity instanceof User && !$entity instanceof TrickPost) {
             return;
         }
         $entity->setUpdatedAtNow();

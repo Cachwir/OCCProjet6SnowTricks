@@ -18,32 +18,15 @@ use Symfony\Component\Validator\ConstraintValidator;
  * @Annotation
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
-class IsUserPasswordValidator extends ConstraintValidator
+class IsYoutubeUrlValidator extends ConstraintValidator
 {
-    /**
-     * @var TokenStorage
-     */
-    private $security;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
-
-    public function __construct(TokenStorageInterface $security, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->security = $security;
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
     public function validate($value, Constraint $constraint)
     {
         if (!$value) {
             return;
         }
 
-        $user = $this->security->getToken()->getUser();
-
-        if (!$this->passwordEncoder->isPasswordValid($user, $value)) {
+        if (strpos($value, "https://youtu.be/") !== 0) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();

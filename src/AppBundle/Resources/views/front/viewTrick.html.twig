@@ -1,0 +1,238 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/view-trick.css') }}" />
+{% endblock %}
+
+{% block content_body %}
+
+    <!-- content -->
+    <section class="content blog color1 top-panel">
+        <div class="container">
+            <div class="row">
+                <!-- post  -->
+                <div class="span12">
+                    <article>
+                        <header>
+                            <div class="postTitle clearfix">
+                                <h2>{{ trick.name }}</h2>
+                            </div>
+                            <div class="widget blogTags">
+                                <ul>
+                                    {% for tag in trick.tags %}
+                                        <li>
+                                            <a href="#" class="w2">{{ tag.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% if trick.images or trick.videos %}
+                                <div class="row">
+                                    <div class="span8">
+                                        <div class="front-media">
+                                            <div class="imgWrapper">
+                                                <div class="video_container">
+                                                    <div class="ratio">
+                                                        <div id="player" class="front-video"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="image_container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4">
+                                        {% if trick.images %}
+                                            <h4>Images</h4>
+                                            <div class="media-images">
+                                                {% for image in trick.images %}
+                                                    <a href="#" class="media-image thumbnail">
+                                                        <img src="{{ pathToTrickImages ~ "/" ~ image }}" alt="cliquez pour voir en grand">
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        {% if trick.videos %}
+                                            <h4>Vidéos</h4>
+                                            <div class="media-videos">
+                                                {% for video in trick.videos %}
+                                                    {% set videoId = str_replace("https://youtu.be/", "", video) %}
+                                                    <a href="#" class="media-video thumbnail" data-video-id="{{ videoId }}">
+                                                        <img src="https://img.youtube.com/vi/{{ videoId }}/1.jpg" alt="cliquez pour lancer la vidéo">
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <ul class="entry-meta">
+                                <li class="entry-author"><i class="icon-user"></i>Auteur : {{ trick.author.pseudonym }}</li>
+                                {% if trick.lastContributor %}
+                                    <li class="entry-author"><i class="icon-user"></i>Dernier contributeur : {{ trick.lastContributor.pseudonym }}</li>
+                                {% endif %}
+                                <li class="entry-comments"><i class="icon-comment"></i>12 comments</li>
+                            </ul>
+                        </header>
+                        <section class="blogPost clearfix">
+                            <h3>En quelques mots </h3>
+                            <p> {{ trick.introduction|nl2br }} </p>
+                            <h3>Description complète </h3>
+                            <p> {{ trick.description|nl2br }}a </p>
+                        </section>
+                        <hr>
+                        <section class="clearfix comments">
+                            <h3 class="commentNumbers">Comments (5)</h3>
+                            <div class="media"> <a class="pull-left" href="#">
+                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
+                                </a>
+                                <div class="media-body">
+                                    <div class="clearfix">
+                                        <h4 class="media-heading">Joey Tribbiani</h4>
+                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                    </div>
+                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu
+                                    <!-- Nested media object -->
+                                    <div class="media"> <a class="pull-left" href="#">
+                                            <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="clearfix">
+                                                <h4 class="media-heading">Monica Geller</h4>
+                                                <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                            </div>
+                                            Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
+                                    </div>
+                                    <!-- Nested media object -->
+                                    <div class="media"> <a class="pull-left" href="#">
+                                            <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="clearfix">
+                                                <h4 class="media-heading">Phoebe Buffay</h4>
+                                                <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                            </div>
+                                            Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media"> <a class="pull-left" href="#">
+                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
+                                </a>
+                                <div class="media-body">
+                                    <div class="clearfix">
+                                        <h4 class="media-heading">Chandler Bing</h4>
+                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                    </div>
+                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
+                            </div>
+                            <div class="media"> <a class="pull-left" href="#">
+                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
+                                </a>
+                                <div class="media-body">
+                                    <div class="clearfix">
+                                        <h4 class="media-heading">Ross Geller</h4>
+                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                    </div>
+                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
+                            </div>
+                            <hr>
+                            <h3 class="commentNumbers">Laisser un commentaire</h3>
+                            <form method="post" action="corporate-blog-post.html" id="postComment">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" placeholder="Name *"/>
+                                <label for="email">Email</label>
+                                <input type="text" name="email" id="email" placeholder="Email *"/>
+                                <label for="comment">Comment</label>
+                                <textarea cols="5" rows="5" name="comment" id="comment" placeholder="Comment *"></textarea>
+                                <button class="btn btnMedium" type="submit" name="submitComment">submit</button>
+                            </form>
+                        </section>
+                    </article>
+                </div>
+                <!-- post  -->
+            </div>
+        </div>
+        <!-- blog content -->
+    </section>
+    <!-- end content -->
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+
+            $(document).ready(function() {
+                $('.media-images a').click(function(e) {
+                    e.preventDefault();
+                    displayImage($(this).find("img"));
+                });
+
+                $('.media-videos a').click(function(e) {
+                    e.preventDefault();
+                    playVideo($(this).data("videoId"));
+                });
+            });
+
+            $('body').on('onPlayerReady', function() {
+                if ($('.media-images').children().length) {
+                    displayImage($('.media-images').find("img").first());
+                } else {
+                    if (player_ready) {
+                        playVideo($('.media-video').first().data("videoId"), false);
+                    }
+                }
+            });
+
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = $('body script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var YTplayer;
+            var player_ready = false;
+            function onYouTubeIframeAPIReady() {
+                YTplayer = new YT.Player('player', {
+                    videoId: "khNZswe_Lpk",
+                    playerVars: {modestbranding: 1, rel: 0, controls: 1},
+                    allowfullscreen: 1,
+                    events: {
+                        onReady: function playerReady() {
+                            player_ready = true;
+                            $('body').trigger('onPlayerReady');
+                        },
+                        onStateChange: function playerStateChange(e) {
+                            if (e.data == YT.PlayerState.ENDED) {
+                                console.log("Ended !");
+                                stopVideo();
+                            }
+                        }
+                    }
+                });
+            }
+
+            function playVideo($videoId, autoplay) {
+                autoplay = autoplay === false ? autoplay : true;
+                YTplayer.stopVideo();
+                YTplayer.playVideo($videoId);
+                if (!autoplay) {
+                    YTplayer.stopVideo();
+                }
+                $('.image_container').fadeOut();
+                $('.video_container').fadeIn();
+            }
+            function displayImage($image) {
+                YTplayer.stopVideo();
+                var img = "<img src='"+ $image.attr("src") +"'>";
+                $('.image_container').html($(img)).fadeIn();
+                $('.video_container').fadeOut();
+            }
+
+    </script>
+
+{% endblock %}

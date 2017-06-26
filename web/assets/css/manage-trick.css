@@ -1,0 +1,34 @@
+textarea {
+    height: auto;
+}
+
+.add-button-area {
+    margin: 1em 0;
+}
+.collection-subform {
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0s forwards;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5em;
+}
+.collection-subform .file-type-container, .collection-subform .url-type-container {
+    width: calc(100% - 35px);
+}
+.collection-subform input {
+    margin: 0;
+}
+.cancel-btn {
+    color: #e9322d;
+    font-size: 2em;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

@@ -3,3 +3,25 @@ AppBundle\Entity\User:
     email: cachwir+<current()>@gmx.com
     plainPassword: iliketurtles
     pseudonym: Agent_<current()>
+
+AppBundle\Entity\TrickTag:
+  trick_tag_1:
+    name: Regular
+  trick_tag_2:
+    name: Goofy
+  trick_tag_3:
+    name: Switch
+  trick_tag_4:
+    name: Grab
+  trick_tag_5:
+    name: Rotation
+  trick_tag_6:
+    name: Flip
+  trick_tag_7:
+    name: Rotation désaxée
+  trick_tag_8:
+    name: Slide
+  trick_tag_9:
+    name: One foot
+  trick_tag_10:
+    name: Old school

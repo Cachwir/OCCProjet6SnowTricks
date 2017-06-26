@@ -39,7 +39,7 @@ class UserEmailForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['Default', 'ComparePassword'],
+            'validation_groups' => ['Default', 'ComparePassword', "ChangeEmail"],
         ]);
     }
 

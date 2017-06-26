@@ -577,7 +577,7 @@ section#projectDescription {
 }
 
 /*** Form ***/
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus, textarea:focus, .select2-container--default:focus .select2-selection--multiple {
 	border: none;
 	color: #fff;
 	background-color:#444;
@@ -585,7 +585,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 	-webkit-box-shadow:none;
 	-moz-box-shadow:none;
 }
-input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea, select {
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], textarea, select, .select2-container--default.select2-container--focus .select2-selection--multiple {
 	color: #444;
 	background-color:#ededed;
     border:1px solid #ededed;

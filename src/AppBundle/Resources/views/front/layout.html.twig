@@ -17,6 +17,8 @@
     <!-- icon fonts -->
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/font-icons/custom-icons/css/custom-icons.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/font-icons/custom-icons/css/custom-icons-ie7.css') }}" />
+    <!-- libs -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/js/lib/select2/dist/css/select2.css') }}" />
     <!-- Custom css -->
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/css/layout.css') }}" />
     <link type="text/css" rel="stylesheet" id="colors" href="{{ asset('assets/altea/css/light.css') }}" />
@@ -60,6 +62,11 @@
                             </li>
                             {% block menu %}{% endblock %}
                             {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <a href="{{ path("front_add_trick") }}">
+                                        Ajouter un trick
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ path("security_logout") }}">
                                         Déconnexion
@@ -136,6 +143,8 @@
 <script type="text/javascript" src="{{ asset('assets/altea/js-plugin/parallax/js/jquery.localscroll-1.2.7-min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/altea/js-plugin/parallax/js/jquery.stellar.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/altea/js-plugin/smoothscroll/SmoothScroll.js') }}"></script>
+<!-- SnowTricks libs -->
+<script type="text/javascript" src="{{ asset('assets/js/lib/select2/dist/js/select2.js') }}"></script>
 
 
 <!-- Custom  -->
