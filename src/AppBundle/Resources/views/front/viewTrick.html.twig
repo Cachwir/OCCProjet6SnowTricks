@@ -36,11 +36,13 @@
                                                         <div id="player" class="front-video"></div>
                                                     </div>
                                                 </div>
-                                                <div class="image_container"></div>
+                                                <div class="image_container">
+                                                    <a href="#" class="thumbnail" data-fancybox="images"></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span4">
+                                    <div class="span4 media-thumbnails">
                                         {% if trick.images %}
                                             <h4>Images</h4>
                                             <div class="media-images">
@@ -71,6 +73,11 @@
                                     <li class="entry-author"><i class="icon-user"></i>Dernier contributeur : {{ trick.lastContributor.pseudonym }}</li>
                                 {% endif %}
                                 <li class="entry-comments"><i class="icon-comment"></i>12 comments</li>
+                                {% if is_granted('ROLE_USER') %}
+                                    <li class="entry-edit">
+                                        <a href="{{ path("front_edit_trick", {id: trick.id}) }}"><i class="icon-edit"></i>Editer</a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </header>
                         <section class="blogPost clearfix">
@@ -80,72 +87,55 @@
                             <p> {{ trick.description|nl2br }}a </p>
                         </section>
                         <hr>
-                        <section class="clearfix comments">
-                            <h3 class="commentNumbers">Comments (5)</h3>
-                            <div class="media"> <a class="pull-left" href="#">
-                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
-                                </a>
-                                <div class="media-body">
-                                    <div class="clearfix">
-                                        <h4 class="media-heading">Joey Tribbiani</h4>
-                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
-                                    </div>
-                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu
-                                    <!-- Nested media object -->
-                                    <div class="media"> <a class="pull-left" href="#">
-                                            <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="clearfix">
-                                                <h4 class="media-heading">Monica Geller</h4>
-                                                <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
-                                            </div>
-                                            Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
-                                    </div>
-                                    <!-- Nested media object -->
-                                    <div class="media"> <a class="pull-left" href="#">
-                                            <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="clearfix">
-                                                <h4 class="media-heading">Phoebe Buffay</h4>
-                                                <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
-                                            </div>
-                                            Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
+                        <section class="clearfix comments" id="comments">
+                            <h3 class="commentNumbers">Commentaires {% if trickComments %}({{ trickComments|length }}){% endif %}</h3>
+                            {% for trickComment in trickComments %}
+                                <div class="media">
+                                    <a class="thumbnail user-avatar pull-left" href="#">
+                                        <div class="imgWrapper">
+                                            <img src="{{ pathToAvatars }}/{{ trickComment.author.avatar ? trickComment.author.avatar : "../default_avatar.png" }}" alt="" />
+                                        </div>
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="clearfix">
+                                            <h4 class="media-heading">{{ trickComment.title }}</h4>
+                                            <div class="commentInfo"> <span>{{ trickComment.publicationDate|date("d/m/Y à H\h i") }}</span> </div>
+                                        </div>
+                                        {{ trickComment.content|nl2br }}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="media"> <a class="pull-left" href="#">
-                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
-                                </a>
-                                <div class="media-body">
-                                    <div class="clearfix">
-                                        <h4 class="media-heading">Chandler Bing</h4>
-                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                            {% else %}
+                                <div class="media">
+                                    Aucun commentaire.<br>
+                                    {% if is_granted("ROLE_USER") %}
+                                        Sois le premier à en laisser un !
+                                    {% else %}
+                                        Connecte-toi pour en laisser un.
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                            {% if form is defined %}
+                                <hr>
+                                <h3 class="commentNumbers">Laisser un commentaire</h3>
+                                {{ form_start(form, {attr: {action: "#comments"}}) }}
+                                    <div class="row">
+                                        <div class="span12">
+                                            {{ form_row(form.title) }}
+                                        </div>
                                     </div>
-                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
-                            </div>
-                            <div class="media"> <a class="pull-left" href="#">
-                                    <div class="imgWrapper"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=50" alt="" /></div>
-                                </a>
-                                <div class="media-body">
-                                    <div class="clearfix">
-                                        <h4 class="media-heading">Ross Geller</h4>
-                                        <div class="commentInfo"> <span>February 29, 2012</span> <a href="#"> Reply</a> </div>
+                                    <div class="row">
+                                        <div class="span12">
+                                            {{ form_row(form.content) }}
+                                        </div>
                                     </div>
-                                    Cras et quam lorem. Fusce rhoncus consequat nulla ut gravida. Sed adipiscing, lacus ac commodo scelerisque, est erat eleifend augue, nec viverra ligula lacus sed arcu </div>
-                            </div>
-                            <hr>
-                            <h3 class="commentNumbers">Laisser un commentaire</h3>
-                            <form method="post" action="corporate-blog-post.html" id="postComment">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" placeholder="Name *"/>
-                                <label for="email">Email</label>
-                                <input type="text" name="email" id="email" placeholder="Email *"/>
-                                <label for="comment">Comment</label>
-                                <textarea cols="5" rows="5" name="comment" id="comment" placeholder="Comment *"></textarea>
-                                <button class="btn btnMedium" type="submit" name="submitComment">submit</button>
-                            </form>
+                                    <div class="row">
+                                        <div class="span12">
+                                            <button class="btn btnMedium" type="submit" name="submitComment">submit</button>
+                                        </div>
+                                    </div>
+                                {{ form_end(form) }}
+                            {% endif %}
                         </section>
                     </article>
                 </div>
@@ -164,6 +154,10 @@
 
 
             $(document).ready(function() {
+                $('.thumbnail').click(function(e) {
+                    e.preventDefault();
+                });
+
                 $('.media-images a').click(function(e) {
                     e.preventDefault();
                     displayImage($(this).find("img"));
@@ -172,6 +166,10 @@
                 $('.media-videos a').click(function(e) {
                     e.preventDefault();
                     playVideo($(this).data("videoId"));
+                });
+
+                $('.image_container a').click(function(e) {
+                    e.preventDefault();
                 });
             });
 
@@ -218,19 +216,27 @@
 
             function playVideo($videoId, autoplay) {
                 autoplay = autoplay === false ? autoplay : true;
-                YTplayer.stopVideo();
-                YTplayer.playVideo($videoId);
-                if (!autoplay) {
+                $('.imgWrapper').fadeOut(300, function() {
                     YTplayer.stopVideo();
-                }
-                $('.image_container').fadeOut();
-                $('.video_container').fadeIn();
+                    YTplayer.playVideo($videoId);
+                    if (!autoplay) {
+                        YTplayer.stopVideo();
+                    }
+                    $('.image_container').hide();
+                    $('.video_container').show();
+                    $('.imgWrapper').fadeIn();
+                });
+
             }
             function displayImage($image) {
-                YTplayer.stopVideo();
-                var img = "<img src='"+ $image.attr("src") +"'>";
-                $('.image_container').html($(img)).fadeIn();
-                $('.video_container').fadeOut();
+                $('.imgWrapper').fadeOut(300, function() {
+                    YTplayer.stopVideo();
+                    var img = "<img src='"+ $image.attr("src") +"'>";
+                    $('.image_container a').html($(img));
+                    $('.image_container').show();
+                    $('.video_container').hide();
+                    $('.imgWrapper').fadeIn();
+                });
             }
 
     </script>

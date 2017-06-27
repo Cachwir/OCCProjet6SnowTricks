@@ -2,21 +2,21 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Json\JsonSerializableHandler;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="trick_post")
  * @UniqueEntity(fields={"name"}, message="Ce nom est déjà pris par un autre trick.", groups={"Registration"})
  */
-class TrickPost
+class TrickPost implements \JsonSerializable
 {
+    use JsonSerializableHandler;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -97,6 +97,18 @@ class TrickPost
      */
     protected $picturesToDelete = [];
 
+    protected static $jsonFields = [
+        "id",
+        "updatedAt",
+        "author",
+        "lastContributor",
+        "name",
+        "introduction",
+        "description",
+        "images",
+        "videos",
+        "tags",
+    ];
 
     /**
      * @return mixed
@@ -294,5 +306,4 @@ class TrickPost
     {
         $this->picturesToDelete = $picturesToDelete;
     }
-
 }

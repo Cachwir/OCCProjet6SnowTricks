@@ -2,20 +2,20 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Json\JsonSerializableHandler;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="trick_tag")
  * @UniqueEntity(fields={"name"}, message="Cette catégorie existe déjà.")
  */
-class TrickTag
+class TrickTag implements \JsonSerializable
 {
+    use JsonSerializableHandler;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -34,6 +34,11 @@ class TrickTag
      */
     protected $name;
 
+    protected static $jsonFields = [
+        "id",
+        "updatedAt",
+        "name",
+    ];
 
     /**
      * @return mixed
@@ -87,5 +92,6 @@ class TrickTag
     {
         $this->name = $name;
     }
+
 
 }

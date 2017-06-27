@@ -87,6 +87,7 @@ class ManageTrickForm extends AbstractType implements ContainerAwareInterface
                 'attr' => [
                     'class' => 'file-type',
                 ],
+                'label' => "Images",
                 'required'  => false,
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Json\JsonSerializableHandler;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,8 +16,10 @@ use AppBundle\Validator\Constraints as CustomAssert;
  * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration", "ChangeEmail"})
  * @UniqueEntity(fields={"pseudonym"}, message="Ce pseudonyme est déjà pris.")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, \JsonSerializable
 {
+    use JsonSerializableHandler;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -82,6 +85,11 @@ class User implements UserInterface, \Serializable
      */
     protected $reinitialisationToken;
 
+    protected static $jsonFields = [
+        "id",
+        "pseudonym",
+        "avatar",
+    ];
 
     /**
      * @return mixed

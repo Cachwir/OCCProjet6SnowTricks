@@ -1,13 +1,11 @@
 .image_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding-bottom: 57%;
     display: none;
 }
 .video_container {
     display: none;
+}
+.image_container a.thumbnail, .image_container a.thumbnail img {
+    display: inline-block;
 }
 .ratio {
     width: 100%;
@@ -23,8 +21,38 @@
     height: 100%;
 }
 
+
+.media-thumbnails {
+    overflow: auto;
+    max-height: 480px;
+}
 .media-video, .media-image {
     display: inline-block;
     width: calc(33% - 12px);
     max-height: 150px;
+    vertical-align: top;
+}
+
+ul.entry-meta li.entry-edit {
+    background-color: #44BCDD;
+    color: white;
+    font-weight: bold;
+}
+ul.entry-meta li.entry-edit a {
+    color: inherit;
+}
+ul.entry-meta li.entry-edit a:focus, ul.entry-meta li.entry-edit a:hover {
+    text-decoration: none;
+}
+.color1 a i, .color1 a:focus i, .color1 a:hover i {
+    color: inherit;
+}
+
+.comments .user-avatar {
+    max-width: 100px;
+    max-height: 100px;
+    display: inline-block;
+}
+.comments .user-avatar img {
+    display: inline-block;
 }
