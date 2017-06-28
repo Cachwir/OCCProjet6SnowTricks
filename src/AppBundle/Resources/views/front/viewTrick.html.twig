@@ -7,7 +7,7 @@
 {% block content_body %}
 
     <!-- content -->
-    <section class="content blog color1 top-panel">
+    <section class="content blog color1 top-panel" id="trick-view">
         <div class="container">
             <div class="row">
                 <!-- post  -->
@@ -72,7 +72,7 @@
                                 {% if trick.lastContributor %}
                                     <li class="entry-author"><i class="icon-user"></i>Dernier contributeur : {{ trick.lastContributor.pseudonym }}</li>
                                 {% endif %}
-                                <li class="entry-comments"><i class="icon-comment"></i>12 comments</li>
+                                <li class="entry-comments"><i class="icon-comment"></i>{{ trickComments|length }} commentaire{{ trickComments|length > 1 ? "s" : "" }}</li>
                                 {% if is_granted('ROLE_USER') %}
                                     <li class="entry-edit">
                                         <a href="{{ path("front_edit_trick", {id: trick.id}) }}"><i class="icon-edit"></i>Editer</a>
@@ -115,8 +115,9 @@
                                 </div>
                             {% endfor %}
 
+                            <hr>
+
                             {% if form is defined %}
-                                <hr>
                                 <h3 class="commentNumbers">Laisser un commentaire</h3>
                                 {{ form_start(form, {attr: {action: "#comments"}}) }}
                                     <div class="row">
@@ -136,6 +137,13 @@
                                     </div>
                                 {{ form_end(form) }}
                             {% endif %}
+                            {% if not is_granted("ROLE_USER") and trickComments|length > 0 %}
+                                <div class="row">
+                                    <div class="span12">
+                                        <h4>Connecte-toi pour laisser un commentaire</h4>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </section>
                     </article>
                 </div>
@@ -145,6 +153,13 @@
         <!-- blog content -->
     </section>
     <!-- end content -->
+
+    <!-- end content -->
+    <nav class="arrowsNav">
+        <a href="#trick-view" class="navUp color4">
+            <i class="icon-up-open"></i>
+        </a>
+    </nav>
 
 {% endblock %}
 

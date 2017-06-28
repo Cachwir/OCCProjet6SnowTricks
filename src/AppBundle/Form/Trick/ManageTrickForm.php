@@ -14,6 +14,7 @@ use AppBundle\Entity\TrickTag;
 use AppBundle\Validator\Constraints\IsYoutubeUrl;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -26,6 +27,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Url;
@@ -104,7 +107,33 @@ class ManageTrickForm extends AbstractType implements ContainerAwareInterface
                 'required'  => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+            ])
+            ->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                array($this, 'onPreSetData')
+            );
+    }
+
+    public function onPreSetData(FormEvent $event)
+    {
+        /**
+         * @var TrickPost $trickPost
+         */
+        $trickPost = $event->getData();
+        $form = $event->getForm();
+        $images = $trickPost->getImages();
+
+        if (!empty($images)) {
+            $form ->add('picturesToDelete', ChoiceType::class, [
+                'choices' => $images,
+                'choice_label' => function($image, $key, $index) {
+                    return "";
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'label'     => 'Supprimer des images',
             ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

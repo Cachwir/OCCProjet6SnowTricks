@@ -32,3 +32,15 @@
         transform: translate(0, 0);
     }
 }
+
+/* Shitty Pretty Photo plugin fixes */
+.pp_details {
+    display: none;
+}
+.pp_content_custom {
+    min-height: 50px;
+    background-color: white;
+}
+.pp_expand {
+    display: none !important;
+}

@@ -22,9 +22,12 @@ class FrontController extends Controller
     public function homeAction(Request $request, EntityManagerInterface $em)
     {
         $trickPosts = $em->getRepository("AppBundle:TrickPost")->findAll();
+        $trickTags = $em->getRepository("AppBundle:TrickTag")->findAll();
 
         return $this->render('AppBundle:front:home.html.twig', [
-            "trickPosts" => $trickPosts
+            "trickPosts" => $trickPosts,
+            "trickTags" => $trickTags,
+            "pathToTrickImages" => "/" . $this->getParameter("path_to_trick_images"),
         ]);
     }
 
@@ -70,6 +73,7 @@ class FrontController extends Controller
             $trickPost = $form->getData();
             $user = $this->getUser();
             $trickPost->setLastContributor($user);
+            $trickPost->setUpdatedAt(time());
 
             $em->persist($trickPost);
             $em->flush();
@@ -84,7 +88,8 @@ class FrontController extends Controller
 
         return $this->render('AppBundle:front:manageTrick.html.twig', [
             "form" => $form->createView(),
-            "title" => "Editer un trick"
+            "title" => "Editer un trick",
+            "pathToTrickImages" => "/" . $this->getParameter("path_to_trick_images"),
         ]);
     }
 

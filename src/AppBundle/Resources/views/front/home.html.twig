@@ -7,7 +7,7 @@
 
 {% block menu %}
     <li>
-        <a href="#about">
+        <a href="#tricks">
             Figures
         </a>
     </li>
@@ -41,76 +41,24 @@
                             Novice, expert, quelque soit ton niveau, découvre, fais découvrir et discute avec d'autres autour de tes tricks préférés !
                         </blockquote>
                     </div>
-                    <div class="span4"> <a class="btn btn-large" title="" href="#"> Découvre l'annuaire</a> </div>
+                    <div class="span4"> <a class="btn btn-large" title="" href="#tricks"> Découvre l'annuaire</a> </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="slice color3" id="works">
+    <section class="slice color3" id="tricks">
         <div class="container clearfix">
             <div class="row">
                 <div class="span12">
                     <h1>Les tricks</h1>
                 </div>
                 <nav id="filter" class="span12 text-center">
-                    <ul>
-                        <li><a href="" class="current btn btn-small" data-filter="*">All</a></li>
-                        <li><a href=""  class="btn btn-small" data-filter=".graphics" >Graphics</a></li>
-                        <li><a href=""  class="btn btn-small" data-filter=".women">Women</a></li>
-                        <li ><a href="" class="btn btn-small" data-filter=".cats">Cats</a></li>
-                    </ul>
+                    <ul class="tags-container"></ul>
                 </nav>
                 <div class="span12">
                     <div class="row">
-                        <div class="portfolio-items isotopeWrapper clearfix imgHover" id="3">
-                            <article class="boxLink boxNew span4 isotopeItem women">
-                                <section class="imgWrapper"><img alt="" src="images/portfolio/vign6.jpg"></section>
-                                <div class="media-hover">
-                                    <div class="mask"></div>
-                                    <div class="iconLinks">
-                                        <a href="portfolio-project-fullwidth-image.html" title="link" target="_blank" class="sizer iconWrapper">
-                                            <i class="icon-picture"></i>
-                                        </a>
-                                        <a href="images/portfolio/zoom6.jpg" class="prettyPhoto iconWrapper" title="Zoom" >
-                                            <i class="icon-search"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <section class="boxContent">
-                                    <h3>Full width image</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate nunc ut tellus sollicitudin placerat.
-                                        <br>
-                                        <a href="portfolio-project-fullwidth-image.html" class="moreLink">&rarr; read more</a>
-                                    </p>
-                                </section>
-                            </article>
-                            <article class="boxLink boxNew span4 isotopeItem cats">
-                                <section class="imgWrapper"> <img alt="" src="images/portfolio/vign1.jpg"> </section>
-                                <div class="media-hover">
-                                    <div class="mask"></div>
-                                    <div class="iconLinks">
-                                        <a href="portfolio-project-fullwidth-video.html" title="link" target="_blank" class="sizer iconWrapper">
-                                            <i class="icon-videocam"></i>
-                                        </a>
-                                        <a href="http://www.youtube.com/watch?v=aqrtF7L86NQ" class="prettyPhoto iconWrapper" title="Video Popup" >
-                                            <i class="icon-search"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <section class="boxContent">
-                                    <h3>Video YouTube</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate nunc ut tellus sollicitudin placerat.
-                                        <br>
-                                        <a href="portfolio-project-fullwidth-video.html" class="moreLink">&rarr; read more</a>
-                                    </p>
-                                </section>
-                                <div class="newBadge">New!</div>
-                            </article>
-
-                        </div>
+                        <div class="portfolio-items isotopeWrapper clearfix imgHover trick-post-container"></div>
                     </div>
                 </div>
             </div>
@@ -130,11 +78,118 @@
 
     <script>
 
-        var trickPosts = {{ trickPosts|json_encode|raw }};
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
 
-        function init() {
+        $(document).ready(function() {
+            trickPostListHandler.init();
+        });
 
-        }
+        var trickPostListHandler = (function()
+        {
+            var trickPosts = {{ trickPosts|json_encode|raw }},
+                trickTags = {{ trickTags|json_encode|raw }},
+                $tagsContainer = $(".tags-container"),
+                $trickPostsContainer = $(".trick-post-container"),
+                pathToTrickImages = "{{ pathToTrickImages }}",
+                pathToView = "{{ path("front_trick", {id: "|id|"}) }}",
+                defaultTrickImage = "default_trick_image.jpg",
+                defaultDisplayedTrickPosts = 9,
+                filters = [],
+
+                trickPostElementPattern = '' +
+                '<article class="boxLink boxNew span4 isotopeItem" data-tags="%tags%">' +
+                    '<section class="imgWrapper"><img alt="" src="%image%"></section>' +
+                    '<div class="media-hover">' +
+                        '<div class="mask"></div>' +
+                        '<div class="iconLinks">' +
+                            '<a href="%href%" title="link" class="sizer iconWrapper">' +
+                                '<i class="icon-picture"></i>' +
+                            '</a>' +
+                            '<a href="%image%" class="prettyPhoto iconWrapper" title="Zoom" >' +
+                                '<i class="icon-search"></i>' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>' +
+                    '<section class="boxContent">' +
+                        '<h3>%title%</h3>' +
+                        '<p>' +
+                            '%introduction%' +
+                            '<br>' +
+                            '<a href="%href%" class="moreLink">&rarr; en savoir plus</a>' +
+                        '</p>' +
+                    '</section>' +
+                    '<div class="newBadge">New!</div>' +
+                '</article>',
+
+                tagElementPattern = '<li><a href="#" class="btn btn-small" data-filter=".%tag%" >%tag%</a></li>';
+
+            var initTrickTags = function initTrickTags()
+            {
+                trickTags.forEach(function(trickTag) {
+                    var tagElement = tagElementPattern.replaceAll("%tag%", trickTag.name);
+                    $tagsContainer.append($(tagElement));
+                });
+            };
+
+            var initTrickPosts = function initTrickPosts()
+            {
+                for (var i = 0, c = trickPosts.length; i < c && i < defaultDisplayedTrickPosts; i++)
+                {
+                    addTrickPost(trickPosts[i]);
+                }
+            };
+
+            var resetTrickPostContainer = function resetTrickPostContainer()
+            {
+                $trickPostsContainer.html("");
+            };
+
+            var addTrickPost = function addTrickPost(trickPost)
+            {
+                var tags = "";
+                trickPost.tags.forEach(function(tag) {
+                    tags += tag.name + " ";
+                });
+                var image = pathToTrickImages + "/";
+                if (jQuery.isEmptyObject(trickPost.images)) {
+                    image += "../" + defaultTrickImage;
+                } else {
+                    image += trickPost.images[Object.keys(trickPost.images)[0]];
+                }
+
+                var displayedData = {
+                    tags: tags,
+                    image: image,
+                    href: pathToView.replace("|id|", trickPost.id),
+                    title: trickPost.name,
+                    introduction: trickPost.introduction.length > 100 ? (trickPost.introduction.substring(0,100) + "...") : trickPost.introduction
+                };
+
+                var trickPostElement = trickPostElementPattern;
+
+                $.each(displayedData, function(key, element) {
+                    key = "%" + key + "%";
+                    trickPostElement = trickPostElement.replaceAll(key, element);
+                });
+
+                var $trickPostElement = $(trickPostElement);
+
+                $trickPostsContainer.append($trickPostElement);
+            };
+
+            return {
+                init: function init()
+                {
+                    initTrickTags();
+                    initTrickPosts();
+                    initiatePrettyPhoto();
+                    initiateImageHower();
+                },
+            };
+        }());
 
     </script>
 

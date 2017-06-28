@@ -72,7 +72,7 @@ class HandleTrickMediaListener implements EventSubscriber
             if (file_exists( $this->pathToTrickImages . "/" . $imageToDelete)) {
                 @unlink($this->pathToTrickImages . "/" . $imageToDelete);
             }
-            if (array_key_exists($imageToDelete, $images)) {
+            if (in_array($imageToDelete, $images)) {
                 unset($images[array_search($imageToDelete, $images)]);
             }
         }

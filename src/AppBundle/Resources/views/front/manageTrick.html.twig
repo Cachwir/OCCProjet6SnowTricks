@@ -40,6 +40,20 @@
 
                             <div class="row">
                                 <div class="span6 clearfix">
+                                    {% if form.picturesToDelete is defined %}
+                                        <div class="form-group {% if form.picturesToDelete.vars.errors|length %}has-error{% endif %}">
+                                            {{ form_label(form.picturesToDelete) }}
+
+                                            {% for picture in form.picturesToDelete.children %}
+                                                {{ form_widget(picture, {attr: {style: "display: none;"}}) }}
+                                                <label for="{{ picture.vars.id }}" class="thumbnail image-to-delete">
+                                                    <img src="{{ pathToTrickImages }}/{{ picture.vars.value }}" alt="cliquez pour sélectionner pour la suppression">
+                                                </label>
+                                            {% endfor %}
+
+                                            {{ form_errors(form.picturesToDelete) }}
+                                        </div>
+                                    {% endif %}
                                     <div class="form-group {% if form.plainPictures.vars.errors|length %}has-error{% endif %}">
                                         {{ form_label(form.plainPictures) }}
                                         <div class="add-button-area add-image-button-area"></div>
@@ -96,6 +110,16 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    <script>
+
+        $(function() {
+
+
+
+        });
+
+    </script>
 
     <script>
 
