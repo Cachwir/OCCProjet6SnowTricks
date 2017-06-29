@@ -75,6 +75,12 @@ ul.socialNetwork li {
     margin: 0 0.5rem;
 }
 
+@media (max-width: 979px) and (min-width: 768px) {
+    .top-panel {
+        padding-top: 12rem !important;
+    }
+}
+
 
 /**           FORMS           **/
 

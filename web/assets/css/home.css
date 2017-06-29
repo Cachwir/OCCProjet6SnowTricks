@@ -34,6 +34,12 @@
     }
 }
 
+@media (max-width: 979px) and (min-width: 768px) {
+    .top-panel {
+        padding-top: 13.5rem !important;
+    }
+}
+
 /* Quote */
 .ctaBox blockquote {
     font-size: 1.65em;
@@ -52,12 +58,15 @@
 }
 
 /* Tricks list */
+nav#filter a {
+    margin: 2px 0;
+}
 .trick-post-section {
     position: relative;
 }
 
 .trick-post-section {
-    max-height: 80vh;
+    max-height: 70vh;
     overflow-y: auto !important;
 }
 
