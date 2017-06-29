@@ -112,6 +112,8 @@
                 pathToView = "{{ path("front_trick", {id: "|id|"}) }}",
                 defaultTrickImage = "default_trick_image.jpg",
                 defaultDisplayedTrickPosts = 100,
+                canDelete = {{ is_granted("ROLE_USER") ? "true" : "false" }},
+                deleteUrl = "{{ url("front_delete_trick", {id: "|id|"}) }}",
 
                 trickPostElementPattern = '' +
                 '<article class="boxLink boxNew span4 isotopeItem %tags%">' +
@@ -136,7 +138,8 @@
                             '<a href="%href%" class="moreLink">&rarr; en savoir plus</a>' +
                         '</p>' +
                     '</section>' +
-                    '<div class="newBadge">New!</div>' +
+                    '<div class="newBadge newBadgeNew">New!</div>' +
+                    '<a href="%deleteUrl%" class="newBadge deleteBadge"><i class="icon-trash"></i></a>' +
                 '</article>',
 
                 tagElementPattern = '<li><a href="#" class="btn btn-small" data-filter=".%tag_slug%" >%tag%</a></li>',
@@ -161,7 +164,19 @@
 
                 $('.trick-tags a').click(function(e) {
                     e.preventDefault();
-                })
+                });
+
+                $('.deleteBadge').click(function(e) {
+                    var href = $(this).attr("href");
+                    e.preventDefault();
+                    x0p('Confirmation', 'Tu t\'apprêtes à supprimer ce trick définitivement. Confirmes-tu ?', 'warning',
+                    function(button, text) {
+                        if(button === 'warning') {
+                            window.location = href;
+                        }
+                    });
+                });
+
             };
 
             var addTrickPost = function addTrickPost(trickPost)
@@ -191,7 +206,8 @@
                     creationDate: trickPost.creationDate,
                     href: pathToView.replace("|id|", trickPost.id),
                     title: trickPost.name,
-                    introduction: trickPost.introduction.length > 100 ? (trickPost.introduction.substring(0,100) + "...") : trickPost.introduction
+                    introduction: trickPost.introduction.length > 100 ? (trickPost.introduction.substring(0,100) + "...") : trickPost.introduction,
+                    deleteUrl: deleteUrl.replace("|id|", trickPost.id)
                 };
 
                 var trickPostElement = trickPostElementPattern;
@@ -205,7 +221,10 @@
 
                 $trickPostElement.find(".trick-tags").append($trickPostTags);
                 if (!isNew) {
-                    $trickPostElement.find(".newBadge").remove();
+                    $trickPostElement.find(".newBadgeNew").remove();
+                }
+                if (!canDelete) {
+                    $trickPostElement.find(".deleteBadge").remove();
                 }
 
                 $trickPostsContainer.append($trickPostElement);

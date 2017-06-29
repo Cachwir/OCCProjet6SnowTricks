@@ -17,6 +17,7 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /reinitialise-password/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /logout, roles: ROLE_USER }
         - { path: /parameters, roles: ROLE_USER }
 

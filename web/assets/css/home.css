@@ -81,6 +81,23 @@
     }
 }
 
+.isotopeItem .deleteBadge {
+    background-color: #e9322d;
+    cursor: pointer;
+}
+
+.x0p.default .content {
+   padding: 0;
+}
+.isotopeItem .newBadge + .deleteBadge {
+    top: 70px;
+}
+.isotopeItem .deleteBadge i {
+    color: inherit;
+    font-size: 25px;
+    line-height: 2em;
+}
+
 /* Add trick block */
 .add-trick-block {
     margin-top: 6em;

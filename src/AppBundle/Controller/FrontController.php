@@ -94,6 +94,22 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     */
+    public function deleteTrickAction(TrickPost $trickPost, Request $request, EntityManagerInterface $em)
+    {
+        $em->remove($trickPost);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            sprintf('Félicitations %s ! Ce trick a été supprimé avec succès !', $this->getUser()->getPseudonym())
+        );
+
+        return $this->redirectToRoute("front_home");
+    }
+
     public function trickAction(TrickPost $trickPost, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(NewCommentForm::class);
