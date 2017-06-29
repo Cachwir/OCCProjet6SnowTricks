@@ -15,31 +15,20 @@
                     <h1>{{ title }}</h1>
                 </div>
                 <div id="contactSlide">
-                    <div class="span12">
-                        {{ form_start(form) }}
-                            <div class="row">
-                                <div class="span6 clearfix">
-                                    {{ form_row(form.name) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="span12 clearfix">
-                                    {{ form_row(form.tags) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="span12 clearfix">
-                                    {{ form_row(form.introduction) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="span12 clearfix">
-                                    {{ form_row(form.description) }}
-                                </div>
-                            </div>
+                    {{ form_start(form) }}
+                        <div class="span6">
 
-                            <div class="row">
-                                <div class="span6 clearfix">
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.tags) }}
+
+                            {{ form_row(form.introduction) }}
+
+                            {{ form_row(form.description) }}
+
+                        </div>
+                        <div class="span6">
+                            <div class="manage-media">
+                                <div>
                                     {% if form.picturesToDelete is defined %}
                                         <div class="form-group {% if form.picturesToDelete.vars.errors|length %}has-error{% endif %}">
                                             {{ form_label(form.picturesToDelete) }}
@@ -60,10 +49,10 @@
                                         {{ form_widget(form.plainPictures, {attr: {style: "display: none;"}}) }}
 
                                         <div class="images-container" data-prototype="
-                                                            {% filter escape %}
-                                                                 {{ include('AppBundle:front/prototypes:imageForm.html.twig') }}
-                                                             {% endfilter %}
-                                                        ">
+                                                                {% filter escape %}
+                                                                     {{ include('AppBundle:front/prototypes:imageForm.html.twig') }}
+                                                                 {% endfilter %}
+                                                            ">
                                         </div>
 
                                         {% for child in form.plainPictures.children %}
@@ -72,17 +61,17 @@
                                     </div>
                                 </div>
 
-                                <div class="span6 clearfix">
+                                <div>
                                     <div class="form-group {% if form.videos.vars.errors|length %}has-error{% endif %}">
                                         {{ form_label(form.videos) }}
                                         <div class="add-button-area add-video-button-area"></div>
                                         {{ form_widget(form.videos, {attr: {style: "display: none;"}}) }}
 
                                         <div class="videos-container" data-prototype="
-                                                                {% filter escape %}
-                                                                     {{ include('AppBundle:front/prototypes:videoForm.html.twig') }}
-                                                                 {% endfilter %}
-                                                            ">
+                                                                    {% filter escape %}
+                                                                         {{ include('AppBundle:front/prototypes:videoForm.html.twig') }}
+                                                                     {% endfilter %}
+                                                                ">
                                         </div>
 
                                         {% for child in form.videos.children %}
@@ -91,17 +80,14 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <br>
+                        <br>
 
-                            <div class="row">
-                                <div class="span12">
-                                    <button type="submit" class="btn">S'inscrire</button>
-                                </div>
-                            </div>
-                        {{ form_end(form) }}
-
-                    </div>
+                        <div class="span12">
+                            <button type="submit" class="btn">S'inscrire</button>
+                        </div>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

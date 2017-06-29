@@ -744,11 +744,14 @@ $(window).load(function() {
         $('#filter a').click(function(e){
 
             //$('#works').height(rightHeight);
-            $('#filter a').removeClass('current');
+            $(this).toggleClass('current');
 
+            var selector = "";
 
-            $(this).addClass('current');
-            var selector = $(this).attr('data-filter');
+            $.each($("#filter a.current"), function(key, element) {
+                selector += $(element).attr('data-filter');
+            });
+
             $container.isotope({
                 filter: selector,
                 animationOptions: {

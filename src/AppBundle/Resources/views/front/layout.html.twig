@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/js-plugin/animation-framework/animate.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/js-plugin/pretty-photo/css/prettyPhoto.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/js-plugin/flexslider/flexslider.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/js-plugin/isotope/css/style.css') }}" />
     <!-- icon fonts -->
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/font-icons/custom-icons/css/custom-icons.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/altea/font-icons/custom-icons/css/custom-icons-ie7.css') }}" />
@@ -145,7 +146,7 @@
 <script type="text/javascript" src="{{ asset('assets/altea/js-plugin/smoothscroll/SmoothScroll.js') }}"></script>
 <!-- SnowTricks libs -->
 <script type="text/javascript" src="{{ asset('assets/js/lib/select2/dist/js/select2.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('assets/js/lib/jquery.lazy/jquery.lazy.js') }}"></script>
 
 <!-- Custom  -->
 <script type="text/javascript" src="{{ asset('assets/altea/js/custom.js') }}"></script>
@@ -177,6 +178,12 @@
             }
         }
     });
+</script>
+
+<script>
+
+    $("img").lazy();
+
 </script>
 
 {% block javascripts %}

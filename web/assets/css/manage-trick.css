@@ -33,6 +33,22 @@ textarea {
     }
 }
 
+.manage-media {
+    border: 1px solid lightgray;
+    padding: 1vw;
+}
+.manage-media > div:first-child {
+    margin: 10px 0;
+}
+.manage-media .form-group > label {
+    font-size: 18px;
+    text-align: center;
+}
+.manage-media .add-button-area {
+    text-align: center;
+    margin: 20px;
+}
+
 .image-to-delete {
     position:  relative;
     display: inline-block;

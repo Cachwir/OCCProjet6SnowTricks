@@ -25,3 +25,12 @@ AppBundle\Entity\TrickTag:
     name: One foot
   trick_tag_10:
     name: Old school
+
+AppBundle\Entity\TrickPost:
+  trick_post_{1..100}:
+    creationDate: <numberBetween(1496059534, 1498737934)>
+    author: '@user_<numberBetween(1, 10)>'
+    name: Trick_<current()>
+    introduction: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['@trick_tag_<numberBetween(1, 10)>']

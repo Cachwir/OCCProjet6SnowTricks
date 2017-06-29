@@ -30,6 +30,11 @@ class TrickPost implements \JsonSerializable
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $creationDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="RESTRICT")
      */
@@ -99,6 +104,7 @@ class TrickPost implements \JsonSerializable
 
     protected static $jsonFields = [
         "id",
+        "creationDate",
         "updatedAt",
         "author",
         "lastContributor",
@@ -124,6 +130,22 @@ class TrickPost implements \JsonSerializable
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param mixed $creationDate
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
     }
 
     /**

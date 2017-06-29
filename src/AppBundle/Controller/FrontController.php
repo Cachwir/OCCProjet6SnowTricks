@@ -43,6 +43,7 @@ class FrontController extends Controller
             $trickPost = $form->getData();
             $user = $this->getUser();
             $trickPost->setAuthor($user);
+            $trickPost->setCreationDate(time());
 
             $em->persist($trickPost);
             $em->flush();
