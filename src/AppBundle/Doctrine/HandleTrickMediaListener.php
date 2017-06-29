@@ -34,7 +34,7 @@ class HandleTrickMediaListener implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return ['prePersist', 'preUpdate'];
+        return ['prePersist', 'preUpdate', 'postRemove'];
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -57,6 +57,22 @@ class HandleTrickMediaListener implements EventSubscriber
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($entity));
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
+    }
+
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        if (!$entity instanceof TrickPost) {
+            return;
+        }
+
+        $images = $entity->getImages();
+
+        foreach ($images as $image) {
+            if (file_exists( $this->pathToTrickImages . "/" . $image)) {
+                @unlink($this->pathToTrickImages . "/" . $image);
+            }
+        }
     }
 
     /**

@@ -38,6 +38,10 @@ front_edit_trick:
     path:      /trick/{id}/edit
     defaults: { _controller: AppBundle:Front:editTrick }
 
+front_delete_trick:
+    path:      /trick/{id}/delete
+    defaults: { _controller: AppBundle:Front:deleteTrick }
+
 front_trick:
     path:      /trick/{id}
     defaults: { _controller: AppBundle:Front:trick }

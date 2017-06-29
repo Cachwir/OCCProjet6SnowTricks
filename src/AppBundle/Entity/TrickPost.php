@@ -81,7 +81,7 @@ class TrickPost implements \JsonSerializable
      *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\TrickTag")
      * @ORM\JoinTable(name="trick_post_tag",
-     *      joinColumns={@ORM\JoinColumn(name="trick_post_id", referencedColumnName="id", onDelete="RESTRICT")},
+     *      joinColumns={@ORM\JoinColumn(name="trick_post_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="trick_tag_id", referencedColumnName="id", onDelete="RESTRICT")}
      * )
      */
