@@ -121,18 +121,21 @@ class ManageTrickForm extends AbstractType implements ContainerAwareInterface
          */
         $trickPost = $event->getData();
         $form = $event->getForm();
-        $images = $trickPost->getImages();
 
-        if (!empty($images)) {
-            $form ->add('picturesToDelete', ChoiceType::class, [
-                'choices' => $images,
-                'choice_label' => function($image, $key, $index) {
-                    return "";
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'label'     => 'Supprimer des images',
-            ]);
+        if ($trickPost instanceof TrickPost) {
+            $images = $trickPost->getImages();
+
+            if (!empty($images)) {
+                $form ->add('picturesToDelete', ChoiceType::class, [
+                    'choices' => $images,
+                    'choice_label' => function($image, $key, $index) {
+                        return "";
+                    },
+                    'multiple' => true,
+                    'expanded' => true,
+                    'label'     => 'Supprimer des images',
+                ]);
+            }
         }
     }
 

@@ -80,3 +80,18 @@
         width: 365px;
     }
 }
+
+/* Add trick block */
+.add-trick-block {
+    margin-top: 6em;
+    margin-bottom: 2em;
+}
+.add-trick-block .span12 {
+    text-align: center;
+}
+.add-trick-block blockquote {
+    margin-bottom: 1em;
+}
+.add-trick-block a {
+    float: none;
+}
