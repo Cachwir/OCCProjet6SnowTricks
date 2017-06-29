@@ -1,1 +1,3 @@
 parameters:
+    path_to_avatars: assets/img/avatars
+    path_to_trick_images: assets/img/trickImages

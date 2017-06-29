@@ -10,6 +10,7 @@ namespace AppBundle\Form\User;
 
 
 use AppBundle\Entity\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -40,6 +41,9 @@ class UserRegistrationForm extends AbstractType
             ])->add('plainAvatar', FileType::class, [
                 'label'     => 'Avatar',
                 'required'  => false,
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label'     => 'Captcha : recopie le texte de l\'image pour valider ton inscription',
             ]);
     }
 
