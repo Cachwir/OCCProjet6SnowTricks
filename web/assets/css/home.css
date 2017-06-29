@@ -83,10 +83,7 @@ nav#filter a {
 }
 .trick-post-section {
     position: relative;
-}
-
-.trick-post-section {
-    max-height: 70vh;
+    max-height: 50vh;
     overflow-y: auto !important;
 }
 
@@ -101,11 +98,6 @@ nav#filter a {
 .trick-post-section .trick-tags a:hover, .trick-post-section .trick-tags a.current {
     background-color: #44BCDD;
     color: #fff;
-}
-
-.trick-post-section {
-    max-height: 70vh;
-    overflow-y: auto !important;
 }
 
 @media (min-width: 1200px)
