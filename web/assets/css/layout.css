@@ -75,11 +75,18 @@ ul.socialNetwork li {
     margin: 0 0.5rem;
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) {
     .top-panel {
         padding-top: 15rem !important;
     }
 }
+
+@media (max-width: 767px) {
+    .top-panel {
+        padding-top: 15rem !important;
+    }
+}
+
 
 
 /**           FORMS           **/
@@ -207,3 +214,8 @@ ul.socialNetwork li {
     background-color: #F86D18;
 }
 
+/* Footer */
+
+.navUp {
+    left: calc(50% - 25px);
+}
