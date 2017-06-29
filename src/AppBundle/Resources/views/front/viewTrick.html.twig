@@ -1,0 +1,259 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/view-trick.css') }}" />
+{% endblock %}
+
+{% block content_body %}
+
+    <!-- content -->
+    <section class="content blog color1 top-panel" id="trick-view">
+        <div class="container">
+            <div class="row">
+                <!-- post  -->
+                <div class="span12">
+                    <article>
+                        <header>
+                            <div class="postTitle clearfix">
+                                <h2>{{ trick.name }}</h2>
+                            </div>
+                            <div class="widget blogTags">
+                                <ul>
+                                    {% for tag in trick.tags %}
+                                        <li>
+                                            <a href="#" class="w2">{{ tag.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% if trick.images or trick.videos %}
+                                <div class="row">
+                                    <div class="span8">
+                                        <div class="front-media">
+                                            <div class="imgWrapper">
+                                                <div class="video_container">
+                                                    <div class="ratio">
+                                                        <div id="player" class="front-video"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="image_container">
+                                                    <a href="#" class="thumbnail" data-fancybox="images"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4 media-thumbnails">
+                                        {% if trick.images %}
+                                            <h4>Images</h4>
+                                            <div class="media-images">
+                                                {% for image in trick.images %}
+                                                    <a href="#" class="media-image thumbnail">
+                                                        <img src="{{ pathToTrickImages ~ "/" ~ image }}" alt="cliquez pour voir en grand">
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        {% if trick.videos %}
+                                            <h4>Vidéos</h4>
+                                            <div class="media-videos">
+                                                {% for video in trick.videos %}
+                                                    {% set videoId = str_replace("https://youtu.be/", "", video) %}
+                                                    <a href="#" class="media-video thumbnail" data-video-id="{{ videoId }}">
+                                                        <img src="https://img.youtube.com/vi/{{ videoId }}/1.jpg" alt="cliquez pour lancer la vidéo">
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <ul class="entry-meta">
+                                <li class="entry-author"><i class="icon-user"></i>Auteur : {{ trick.author.pseudonym }}</li>
+                                {% if trick.lastContributor %}
+                                    <li class="entry-author"><i class="icon-user"></i>Dernier contributeur : {{ trick.lastContributor.pseudonym }}</li>
+                                {% endif %}
+                                <li class="entry-comments"><i class="icon-comment"></i>{{ trickComments|length }} commentaire{{ trickComments|length > 1 ? "s" : "" }}</li>
+                                {% if is_granted('ROLE_USER') %}
+                                    <li class="entry-edit">
+                                        <a href="{{ path("front_edit_trick", {id: trick.id}) }}"><i class="icon-edit"></i>Editer</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </header>
+                        <section class="blogPost clearfix">
+                            <h3>En quelques mots </h3>
+                            <p> {{ trick.introduction|nl2br }} </p>
+                            <h3>Description complète </h3>
+                            <p> {{ trick.description|nl2br }}a </p>
+                        </section>
+                        <hr>
+                        <section class="clearfix comments" id="comments">
+                            <h3 class="commentNumbers">Commentaires {% if trickComments %}({{ trickComments|length }}){% endif %}</h3>
+                            {% for trickComment in trickComments %}
+                                <div class="media">
+                                    <a class="thumbnail user-avatar pull-left" href="#">
+                                        <div class="imgWrapper">
+                                            <img src="{{ pathToAvatars }}/{{ trickComment.author.avatar ? trickComment.author.avatar : "../default_avatar.png" }}" alt="" />
+                                        </div>
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="clearfix">
+                                            <h4 class="media-heading">{{ trickComment.title }}</h4>
+                                            <div class="commentInfo"> <span>{{ trickComment.publicationDate|date("d/m/Y à H\h i") }}</span> </div>
+                                        </div>
+                                        {{ trickComment.content|nl2br }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="media">
+                                    Aucun commentaire.<br>
+                                    {% if is_granted("ROLE_USER") %}
+                                        Sois le premier à en laisser un !
+                                    {% else %}
+                                        Connecte-toi pour en laisser un.
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                            <hr>
+
+                            {% if form is defined %}
+                                <h3 class="commentNumbers">Laisser un commentaire</h3>
+                                {{ form_start(form, {attr: {action: "#comments"}}) }}
+                                    <div class="row">
+                                        <div class="span12">
+                                            {{ form_row(form.title) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="span12">
+                                            {{ form_row(form.content) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="span12">
+                                            <button class="btn btnMedium" type="submit" name="submitComment">submit</button>
+                                        </div>
+                                    </div>
+                                {{ form_end(form) }}
+                            {% endif %}
+                            {% if not is_granted("ROLE_USER") and trickComments|length > 0 %}
+                                <div class="row">
+                                    <div class="span12">
+                                        <h4>Connecte-toi pour laisser un commentaire</h4>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </section>
+                    </article>
+                </div>
+                <!-- post  -->
+            </div>
+        </div>
+        <!-- blog content -->
+    </section>
+    <!-- end content -->
+
+    <!-- end content -->
+    <nav class="arrowsNav">
+        <a href="#trick-view" class="navUp color4">
+            <i class="icon-up-open"></i>
+        </a>
+    </nav>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+
+            $(document).ready(function() {
+                $('.thumbnail').click(function(e) {
+                    e.preventDefault();
+                });
+
+                $('.media-images a').click(function(e) {
+                    e.preventDefault();
+                    displayImage($(this).find("img"));
+                });
+
+                $('.media-videos a').click(function(e) {
+                    e.preventDefault();
+                    playVideo($(this).data("videoId"));
+                });
+
+                $('.image_container a').click(function(e) {
+                    e.preventDefault();
+                });
+            });
+
+            $('body').on('onPlayerReady', function() {
+                if ($('.media-images').children().length) {
+                    displayImage($('.media-images').find("img").first());
+                } else {
+                    if (player_ready) {
+                        playVideo($('.media-video').first().data("videoId"), false);
+                    }
+                }
+            });
+
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = $('body script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var YTplayer;
+            var player_ready = false;
+            function onYouTubeIframeAPIReady() {
+                YTplayer = new YT.Player('player', {
+                    videoId: "khNZswe_Lpk",
+                    playerVars: {modestbranding: 1, rel: 0, controls: 1},
+                    allowfullscreen: 1,
+                    events: {
+                        onReady: function playerReady() {
+                            player_ready = true;
+                            $('body').trigger('onPlayerReady');
+                        },
+                        onStateChange: function playerStateChange(e) {
+                            if (e.data == YT.PlayerState.ENDED) {
+                                console.log("Ended !");
+                                stopVideo();
+                            }
+                        }
+                    }
+                });
+            }
+
+            function playVideo($videoId, autoplay) {
+                autoplay = autoplay === false ? autoplay : true;
+                $('.imgWrapper').fadeOut(300, function() {
+                    YTplayer.stopVideo();
+                    YTplayer.playVideo($videoId);
+                    if (!autoplay) {
+                        YTplayer.stopVideo();
+                    }
+                    $('.image_container').hide();
+                    $('.video_container').show();
+                    $('.imgWrapper').fadeIn();
+                });
+
+            }
+            function displayImage($image) {
+                $('.imgWrapper').fadeOut(300, function() {
+                    YTplayer.stopVideo();
+                    var img = "<img src='"+ $image.attr("src") +"'>";
+                    $('.image_container a').html($(img));
+                    $('.image_container').show();
+                    $('.video_container').hide();
+                    $('.imgWrapper').fadeIn();
+                });
+            }
+
+    </script>
+
+{% endblock %}

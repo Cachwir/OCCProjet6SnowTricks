@@ -1,0 +1,239 @@
+{% extends 'AppBundle:front:layout.html.twig' %}
+
+{% form_theme form 'AppBundle:forms:defaultFormTheme.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/manage-trick.css') }}" />
+{% endblock %}
+
+{% block content_body %}
+
+    <section class="slice color1 top-panel" id="contactSlice" >
+        <div class="container">
+            <div class="row mb40">
+                <div class="span12">
+                    <h1>{{ title }}</h1>
+                </div>
+                <div id="contactSlide">
+                    {{ form_start(form) }}
+                        <div class="span6">
+
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.tags) }}
+
+                            {{ form_row(form.introduction) }}
+
+                            {{ form_row(form.description) }}
+
+                        </div>
+                        <div class="span6">
+                            <div class="manage-media">
+                                <div>
+                                    {% if form.picturesToDelete is defined %}
+                                        <div class="form-group {% if form.picturesToDelete.vars.errors|length %}has-error{% endif %}">
+                                            {{ form_label(form.picturesToDelete) }}
+
+                                            {% for picture in form.picturesToDelete.children %}
+                                                {{ form_widget(picture, {attr: {style: "display: none;"}}) }}
+                                                <label for="{{ picture.vars.id }}" class="thumbnail image-to-delete">
+                                                    <img src="{{ pathToTrickImages }}/{{ picture.vars.value }}" alt="cliquez pour sélectionner pour la suppression">
+                                                </label>
+                                            {% endfor %}
+
+                                            {{ form_errors(form.picturesToDelete) }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-group {% if form.plainPictures.vars.errors|length %}has-error{% endif %}">
+                                        {{ form_label(form.plainPictures) }}
+                                        <div class="add-button-area add-image-button-area"></div>
+                                        {{ form_widget(form.plainPictures, {attr: {style: "display: none;"}}) }}
+
+                                        <div class="images-container" data-prototype="
+                                                                {% filter escape %}
+                                                                     {{ include('AppBundle:front/prototypes:imageForm.html.twig') }}
+                                                                 {% endfilter %}
+                                                            ">
+                                        </div>
+
+                                        {% for child in form.plainPictures.children %}
+                                            {{ form_errors(child) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="form-group {% if form.videos.vars.errors|length %}has-error{% endif %}">
+                                        {{ form_label(form.videos) }}
+                                        <div class="add-button-area add-video-button-area"></div>
+                                        {{ form_widget(form.videos, {attr: {style: "display: none;"}}) }}
+
+                                        <div class="videos-container" data-prototype="
+                                                                    {% filter escape %}
+                                                                         {{ include('AppBundle:front/prototypes:videoForm.html.twig') }}
+                                                                     {% endfilter %}
+                                                                ">
+                                        </div>
+
+                                        {% for child in form.videos.children %}
+                                            {{ form_errors(child) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="span12">
+                            <button type="submit" class="btn">S'inscrire</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        $(function() {
+
+
+
+        });
+
+    </script>
+
+    <script>
+
+        $(function() {
+
+            function handleFileInput($fileInput) {
+                $fileInput.change(function() {
+                    $fileTextInput = $(this).closest('.file-type-container').find('.file-text-input');
+                    $fileTextInput.attr("placeholder", "Chargé et prêt à être envoyé !");
+                    $fileTextInput.siblings(".btn").text("").html('<span class="icon-ok-circle"></span>').addClass("btn-ok");
+                });
+            }
+
+            // setup an "add" link
+            var prototypeHandlers = [
+                {
+                    $target: $("#{{ form.plainPictures.vars.id }}"),
+                    displayItems: false,
+                    $collectionHolder: $(".images-container"),
+                    $addButtonArea: $(".add-image-button-area"),
+                    $addLink: $('<a href="#" class="add_image_widget_link btn btn-small btn-success">Ajouter une image</a>'),
+                    removeLink: '<a href="#"><span class="icon-cancel cancel-btn"></span></a>',
+                    addCallback: function($element) {
+                        handleFileInput($element.find("input[type='file']"));
+                    }
+                },
+                {
+                    $target: $("#{{ form.videos.vars.id }}"),
+                    displayItems: true,
+                    $collectionHolder: $(".videos-container"),
+                    $addButtonArea: $(".add-video-button-area"),
+                    $addLink: $('<a href="#" class="add_video_widget_link btn btn-small btn-success">Ajouter une vidéo</a>'),
+                    removeLink: '<a href="#"><span class="icon-cancel cancel-btn"></span></a>'
+                }
+            ];
+
+            jQuery(document).ready(function() {
+
+                $("#manage_trick_form_tags").select2();
+
+                prototypeHandlers.forEach(function(prototypeHandler) {
+                    // options
+                    prototypeHandler.prototypeCallback = prototypeHandler.hasOwnProperty("prototypeCallback") ? prototypeHandler.prototypeCallback : function(prototype) { return prototype; };
+                    prototypeHandler.addCallback = prototypeHandler.hasOwnProperty("addCallback") ? prototypeHandler.addCallback : function() {};
+
+                    // adds a delete link to all of the existing form li elements
+                    prototypeHandler.$collectionHolder.find('div').each(function() {
+                        addFormDeleteLink($(this));
+                    });
+
+                    // adds the "add an input" anchor
+                    prototypeHandler.$addButtonArea.append(prototypeHandler.$addLink);
+
+                    // count the current form inputs we have (e.g. 2), use that as the new
+                    // index when inserting a new item (e.g. 2)
+                    prototypeHandler.$collectionHolder.data('index', prototypeHandler.$collectionHolder.find(':input').length);
+
+                    prototypeHandler.$addLink.on('click', function(e) {
+                        e.preventDefault();
+                        // add a new form input (see next code block)
+                        addFormPrototype(prototypeHandler);
+                    });
+
+                    hydrateItems(prototypeHandler);
+
+                    if (prototypeHandler.$collectionHolder.children().length === 0) {
+                        addFormPrototype(prototypeHandler);
+                    }
+
+                    prototypeHandler.$target.remove();
+                });
+            });
+
+            function hydrateItems(prototypeHandler)
+            {
+                if (prototypeHandler.displayItems)
+                {
+                    var items = prototypeHandler.$target.find("input");
+
+                    console.log(items);
+
+                    $.each(items, function(key, item) {
+                        addFormPrototype(prototypeHandler, $(item).val());
+                    });
+                }
+            }
+
+            function addFormPrototype(prototypeHandler, $value) {
+                var $collectionHolder = prototypeHandler.$collectionHolder;
+                // get the new index
+                var index = $collectionHolder.data('index');
+                // Get the data-prototype explained earlier
+                var prototype = prototypeHandler.prototypeCallback($collectionHolder.data('prototype'));
+
+                // Replace '__name__' in the prototype's HTML to
+                // instead be a number based on how many items we have
+                var newForm = prototype.replace(/__name__/g, index);
+
+                // increase the index with one for the next item
+                $collectionHolder.data('index', index + 1);
+
+                // Display the form in the page in an li, before the "Add an item" link li
+                var $newFormLi = $(newForm);
+
+                if ($value) {
+                    $newFormLi.find('input').val($value);
+                }
+
+                $collectionHolder.append($newFormLi);
+
+                addFormDeleteLink($collectionHolder, $newFormLi, prototypeHandler);
+
+                prototypeHandler.addCallback($newFormLi);
+            }
+
+            function addFormDeleteLink($collectionHolder, $tagFormLi, prototypeHandler) {
+                var $removeFormA = $(prototypeHandler.removeLink);
+                $tagFormLi.append($removeFormA);
+
+                $removeFormA.on('click', function(e) {
+                    e.preventDefault();
+                    // remove the li for the tag form
+                    $tagFormLi.remove();
+                });
+            }
+
+        }());
+
+    </script>
+
+{% endblock %}

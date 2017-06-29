@@ -53,6 +53,15 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    app.doctrine.handle_trick_media_listener:
+        class: AppBundle\Doctrine\HandleTrickMediaListener
+        arguments:
+            - '%kernel.root_dir%'
+            - '%path_to_trick_images%'
+            - '@app.imageresizer'
+        tags:
+            - { name: doctrine.event_subscriber }
+
     app.doctrine.updated_at_listener:
         class: AppBundle\Doctrine\UpdatedAtListener
         tags:
@@ -82,3 +91,9 @@ services:
     app.imageresizer:
         class: AppBundle\Services\ImageResizer
         public: true
+
+    app.form.manage.trick:
+        class: AppBundle\Form\Trick\ManageTrickForm
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+

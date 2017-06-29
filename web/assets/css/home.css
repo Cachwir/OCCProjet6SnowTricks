@@ -1,3 +1,4 @@
+/* Top section */
 #homeApp {
     background-image: url(../img/bg.jpg);
     background-position: 0 13%;
@@ -30,5 +31,52 @@
     100% {
         opacity: 1;
         transform: translate(0, 0);
+    }
+}
+
+/* Quote */
+.ctaBox blockquote {
+    font-size: 1.65em;
+}
+
+/* Shitty Pretty Photo plugin fixes */
+.pp_details {
+    display: none;
+}
+.pp_content_custom {
+    min-height: 50px;
+    background-color: white;
+}
+.pp_expand {
+    display: none !important;
+}
+
+/* Tricks list */
+.trick-post-section {
+    position: relative;
+}
+
+.trick-post-section {
+    max-height: 80vh;
+    overflow-y: auto !important;
+}
+
+.trick-post-section .trick-tags a {
+    background-color: #EEE;
+    color: #555;
+    padding: 4px 12px;
+    line-height: 20px;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.trick-post-section .trick-tags a:hover, .trick-post-section .trick-tags a.current {
+    background-color: #44BCDD;
+    color: #fff;
+}
+
+@media (min-width: 1200px)
+{
+    .isotopeItem.span4 {
+        width: 365px;
     }
 }

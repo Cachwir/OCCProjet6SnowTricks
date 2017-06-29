@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Json\JsonSerializableHandler;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,11 +13,13 @@ use AppBundle\Validator\Constraints as CustomAssert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration"})
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris.", groups={"Registration", "ChangeEmail"})
  * @UniqueEntity(fields={"pseudonym"}, message="Ce pseudonyme est déjà pris.")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable, \JsonSerializable
 {
+    use JsonSerializableHandler;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -72,7 +75,7 @@ class User implements UserInterface
     /**
      * A non-persisted field used to create the avatar.
      *
-     * @Assert\Image()
+     * @Assert\Image(maxSize = "2048k")
      * @var UploadedFile
      */
     protected $plainAvatar;
@@ -82,6 +85,11 @@ class User implements UserInterface
      */
     protected $reinitialisationToken;
 
+    protected static $jsonFields = [
+        "id",
+        "pseudonym",
+        "avatar",
+    ];
 
     /**
      * @return mixed
@@ -282,4 +290,29 @@ class User implements UserInterface
     }
 
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->pseudonym,
+            $this->password,
+            $this->avatar,
+            $this->reinitialisationToken,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->pseudonym,
+            $this->password,
+            $this->avatar,
+            $this->reinitialisationToken,
+            ) = unserialize($serialized);
+    }
 }

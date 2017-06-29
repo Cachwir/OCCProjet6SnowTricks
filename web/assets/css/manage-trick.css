@@ -1,0 +1,78 @@
+textarea {
+    height: auto;
+}
+
+.add-button-area {
+    margin: 1em 0;
+}
+.collection-subform {
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0s forwards;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5em;
+}
+.collection-subform .file-type-container, .collection-subform .url-type-container {
+    width: calc(100% - 35px);
+}
+.collection-subform input {
+    margin: 0;
+}
+.cancel-btn {
+    color: #e9322d;
+    font-size: 2em;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.manage-media {
+    border: 1px solid lightgray;
+    padding: 1vw;
+}
+.manage-media > div:first-child {
+    margin: 10px 0;
+}
+.manage-media .form-group > label {
+    font-size: 18px;
+    text-align: center;
+}
+.manage-media .add-button-area {
+    text-align: center;
+    margin: 20px;
+}
+
+.image-to-delete {
+    position:  relative;
+    display: inline-block;
+    max-width: calc(33% - 12px);
+    max-height: 100px;
+    vertical-align: top;
+}
+input[type="checkbox"] + .image-to-delete:before {
+    transition: background-color 0.5s;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    margin: 4px;
+    z-index: 1;
+    background-color: transparent;
+}
+input[type="checkbox"]:checked + .image-to-delete:before {
+    background-color: rgba(233, 50, 45, 0.5);
+}
+.image-to-delete img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100px;
+}

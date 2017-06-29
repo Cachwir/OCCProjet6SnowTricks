@@ -2159,7 +2159,7 @@ nav#filter li.filterTitle h3 {
 
 /* FORMS
 ================================================== */
-input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea, select {
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], textarea, select, .select2-container--default .select2-selection--multiple {
 	display:block;
 	margin-bottom:1.5em;
 	width: 100%;
@@ -2168,11 +2168,11 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
 	box-sizing: border-box;
 	box-shadow:none;
 }
-input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"] {
 	padding:0 25px;
 	height:50px;
 }
-.row-fluid input[type="text"], .row-fluid input[type="password"], .row-fluid input[type="email"], input[type="tel"], .row-fluid textarea {
+.row-fluid input[type="text"], .row-fluid input[type="password"], .row-fluid input[type="email"], input[type="tel"], input[type="url"], .row-fluid textarea {
 	padding:0 25px;
 	width: 100%;
 	box-shadow:none;
@@ -2181,10 +2181,22 @@ textarea {
 	background: #fff;
 	padding:25px;
 }
-select {
-	padding:16px;
+select, .select2-container--default .select2-selection--multiple {
+	padding: 7px 7px 0 7px;
 	height:auto;
 	background:#ededed;
+}
+.select2 {
+	margin-bottom:1.5em;
+}
+.select2-container--default .select2-selection--multiple {
+	margin-bottom: 0;
+}
+.select2-container .select2-search--inline .select2-search__field {
+	margin-top: 10px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+	margin-top: 7px;
 }
 label, legend {
 	display: block;

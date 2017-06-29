@@ -17,6 +17,8 @@
 /web/bundles/
 /web/assets/img/avatars/*
 !/web/assets/img/avatars/.gitkeep
+/web/assets/img/trickImages/*
+!/web/assets/img/trickImages/.gitkeep
 Supprimerait .idea/
 Supprimerait app/DoctrineMigrations/
 Supprimerait app/Resources/

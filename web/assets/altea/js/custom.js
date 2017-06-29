@@ -84,42 +84,89 @@ $(document).ready(function() {
     |--------------------------------------------------------------------------
     */
 
-    if( $("a.prettyPhoto").length){
-        $("a.prettyPhoto").prettyPhoto({
-            animation_speed:'fast',
-            slideshow:10000, 
-            hideflash: true
-        });
-    }
+    window.initiatePrettyPhoto = function initiatePrettyPhoto() {
+        if( $("a.prettyPhoto").length){
+            $("a.prettyPhoto").prettyPhoto({
+                animation_speed:'fast',
+                slideshow:10000,
+                hideflash: true,
+                show_title: false,
+                social_tools: '',
+                theme: 'dark_squared',
+                markup: '<div class="pp_pic_holder"> \
+						<div class="ppt">&nbsp;</div> \
+						<div class="pp_top"> \
+							<div class="pp_left"></div> \
+							<div class="pp_middle"></div> \
+							<div class="pp_right"></div> \
+						</div> \
+						<div class="pp_content_container"> \
+							<div class="pp_left"> \
+							<div class="pp_right"> \
+								<div class="pp_content_custom"> \
+									<div class="pp_loaderIcon"></div> \
+									<div class="pp_fade"> \
+										<a href="#" class="pp_expand" title="Expand the image">Expand</a> \
+										<div class="pp_hoverContainer"> \
+											<a class="pp_next" href="#">next</a> \
+											<a class="pp_previous" href="#">previous</a> \
+										</div> \
+										<div id="pp_full_res"></div> \
+										<div class="pp_details"> \
+											<div class="pp_nav"> \
+												<a href="#" class="pp_arrow_previous">Previous</a> \
+												<p class="currentTextHolder">0/0</p> \
+												<a href="#" class="pp_arrow_next">Next</a> \
+											</div> \
+											<p class="pp_description"></p> \
+											{pp_social} \
+											<a class="pp_close" href="#">Close</a> \
+										</div> \
+									</div> \
+								</div> \
+							</div> \
+							</div> \
+						</div> \
+						<div class="pp_bottom"> \
+							<div class="pp_left"></div> \
+							<div class="pp_middle"></div> \
+							<div class="pp_right"></div> \
+						</div> \
+					</div> \
+					<div class="pp_overlay"></div>',
+            });
+        }
 
 
-    if( $("a.prettyPhotoGallery").length){
-        
-        $("a.prettyPhotoGallery").click(function (e) {
+        if( $("a.prettyPhotoGallery").length){
 
-            var images = $(this).data("rel");
-            images = images.split(',');
+            $("a.prettyPhotoGallery").click(function (e) {
 
-
-            var api_images =[]; 
+                var images = $(this).data("rel");
+                images = images.split(',');
 
 
-            $.each(images, function( index, value ) {
-                api_images.push(value);
+                var api_images =[];
+
+
+                $.each(images, function( index, value ) {
+                    api_images.push(value);
+                });
+
+                //api_titles = [$(this).data("title")];
+                //api_descriptions = [$(this).data("title")];
+                $.fn.prettyPhoto();
+                $.prettyPhoto.open(api_images);
+
+
+
+                e.preventDefault();
             });
 
-            //api_titles = [$(this).data("title")];
-            //api_descriptions = [$(this).data("title")];
-            $.fn.prettyPhoto();
-            $.prettyPhoto.open(api_images); 
+        }
+    };
 
-        
-
-            e.preventDefault();
-        });
-
-    } 
-    
+    initiatePrettyPhoto();
     
     /*
     |--------------------------------------------------------------------------
@@ -345,56 +392,59 @@ $(document).ready(function() {
     |--------------------------------------------------------------------------
     */     
 
-    if($('.imgHover').length){
+    window.initiateImageHower = function initiateImageHower() {
+        if($('.imgHover').length){
 
-        $('.imgHover article').hover(
-            function () {
+            $('.imgHover article').hover(
+                function () {
 
-                var $this=$(this);
+                    var $this=$(this);
 
-                var fromTop = ($('.imgWrapper', $this).height()/2 - $('.iconLinks', $this).height()/2);
-                $('.iconLinks', $this).css('margin-top',fromTop);
+                    var fromTop = ($('.imgWrapper', $this).height()/2 - $('.iconLinks', $this).height()/2);
+                    $('.iconLinks', $this).css('margin-top',fromTop);
 
-                $('.media-hover', $this).height($('.imgWrapper', $this).height());   
+                    $('.media-hover', $this).height($('.imgWrapper', $this).height());
 
-                $('.mask', this).css('height', $('.imgWrapper', this).height());
-                $('.mask', this).css('width', $('.imgWrapper', this).width());
-                $('.mask', this).stop(true, false).fadeIn('fast', function() {}).end();
+                    $('.mask', this).css('height', $('.imgWrapper', this).height());
+                    $('.mask', this).css('width', $('.imgWrapper', this).width());
+                    $('.mask', this).stop(true, false).fadeIn('fast', function() {}).end();
 
-                if(Modernizr.csstransitions) {
-                    $('.iconLinks a').addClass('animated');
-                    $('.iconLinks', $this).css('display', 'block');
-
-                    $('.iconLinks a:first-child', $this).removeClass('flipOutX'); 
-                    $('.iconLinks a:first-child', $this).addClass('bounceInDown'); 
-
-                    $('.iconLinks a:gt(0)', $this).removeClass('flipOutX'); 
-                    $('.iconLinks a:gt(0)', $this).addClass('bounceInUp'); 
-                }else{
-
-                    $('.iconLinks', $this).stop(true, false).fadeIn('fast');
-                }
-
-                $this.find('.boxInfo > h3').addClass('hoverState', 300);
-                $('.newBadge', this).addClass('animated swing');
-
-            },function () {
-                var $this=$(this);
-                $('.mask', $this).stop(true, false).fadeOut('fast', function() {
                     if(Modernizr.csstransitions) {
-                        $('.iconLinks a:first-child', $this).removeClass('bounceInDown'); 
-                        $('.iconLinks a:first-child', $this).addClass('flipOutX'); 
-                        $('.iconLinks a:gt(0)', $this).removeClass('bounceInUp'); 
-                        $('.iconLinks a:gt(0)', $this).addClass('flipOutX'); 
-                    }else{
-                        $('.iconLinks', $this).stop(true, false).fadeOut('fast');
-                    }
-                    $this.find('.boxInfo>h3').removeClass('hoverState',300);			  
-                }).end(); 
-                $('.newBadge', this).removeClass('animated swing');
-            });
-    }
+                        $('.iconLinks a').addClass('animated');
+                        $('.iconLinks', $this).css('display', 'block');
 
+                        $('.iconLinks a:first-child', $this).removeClass('flipOutX');
+                        $('.iconLinks a:first-child', $this).addClass('bounceInDown');
+
+                        $('.iconLinks a:gt(0)', $this).removeClass('flipOutX');
+                        $('.iconLinks a:gt(0)', $this).addClass('bounceInUp');
+                    }else{
+
+                        $('.iconLinks', $this).stop(true, false).fadeIn('fast');
+                    }
+
+                    $this.find('.boxInfo > h3').addClass('hoverState', 300);
+                    $('.newBadge', this).addClass('animated swing');
+
+                },function () {
+                    var $this=$(this);
+                    $('.mask', $this).stop(true, false).fadeOut('fast', function() {
+                        if(Modernizr.csstransitions) {
+                            $('.iconLinks a:first-child', $this).removeClass('bounceInDown');
+                            $('.iconLinks a:first-child', $this).addClass('flipOutX');
+                            $('.iconLinks a:gt(0)', $this).removeClass('bounceInUp');
+                            $('.iconLinks a:gt(0)', $this).addClass('flipOutX');
+                        }else{
+                            $('.iconLinks', $this).stop(true, false).fadeOut('fast');
+                        }
+                        $this.find('.boxInfo>h3').removeClass('hoverState',300);
+                    }).end();
+                    $('.newBadge', this).removeClass('animated swing');
+                });
+        }
+    };
+
+    initiateImageHower();
 
 
     /*
@@ -694,11 +744,14 @@ $(window).load(function() {
         $('#filter a').click(function(e){
 
             //$('#works').height(rightHeight);
-            $('#filter a').removeClass('current');
+            $(this).toggleClass('current');
 
+            var selector = "";
 
-            $(this).addClass('current');
-            var selector = $(this).attr('data-filter');
+            $.each($("#filter a.current"), function(key, element) {
+                selector += $(element).attr('data-filter');
+            });
+
             $container.isotope({
                 filter: selector,
                 animationOptions: {

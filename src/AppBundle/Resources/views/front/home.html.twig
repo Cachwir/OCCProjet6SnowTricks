@@ -7,7 +7,7 @@
 
 {% block menu %}
     <li>
-        <a href="#about">
+        <a href="#tricks">
             Figures
         </a>
     </li>
@@ -41,7 +41,25 @@
                             Novice, expert, quelque soit ton niveau, découvre, fais découvrir et discute avec d'autres autour de tes tricks préférés !
                         </blockquote>
                     </div>
-                    <div class="span4"> <a class="btn btn-large" title="" href="#"> Découvre l'annuaire</a> </div>
+                    <div class="span4"> <a class="btn btn-large" title="" href="#tricks"> Découvre l'annuaire</a> </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slice color3" id="tricks">
+        <div class="container clearfix">
+            <div class="row">
+                <div class="span12">
+                    <h1>Les tricks</h1>
+                </div>
+                <nav id="filter" class="span12 text-center">
+                    <ul class="tags-container"></ul>
+                </nav>
+                <div class="span12">
+                    <div class="row trick-post-section">
+                        <div class="portfolio-items isotopeWrapper clearfix imgHover trick-post-container"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,5 +71,142 @@
             <i class="icon-up-open"></i>
         </a>
     </nav>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
+
+        $(document).ready(function() {
+            trickPostListHandler.init();
+        });
+
+        var trickPostListHandler = (function()
+        {
+            var trickPosts = {{ trickPosts|json_encode|raw }},
+                trickTags = {{ trickTags|json_encode|raw }},
+                $tagsContainer = $(".tags-container"),
+                $trickPostsContainer = $(".trick-post-container"),
+                pathToTrickImages = "{{ pathToTrickImages }}",
+                pathToView = "{{ path("front_trick", {id: "|id|"}) }}",
+                defaultTrickImage = "default_trick_image.jpg",
+                defaultDisplayedTrickPosts = 100,
+
+                trickPostElementPattern = '' +
+                '<article class="boxLink boxNew span4 isotopeItem %tags%">' +
+                    '<section class="imgWrapper"><img alt="" src="%image%"></section>' +
+                    '<div class="media-hover">' +
+                        '<div class="mask"></div>' +
+                        '<div class="iconLinks">' +
+                            '<a href="%href%" title="link" class="sizer iconWrapper">' +
+                                '<i class="icon-search"></i>' +
+                            '</a>' +
+                            '<a href="%image%" class="prettyPhoto iconWrapper" title="Zoom" >' +
+                                '<i class="icon-resize-full-alt"></i>' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>' +
+                    '<section class="boxContent">' +
+                        '<h3>%title%</h3>' +
+                        '<div class="trick-tags"></div>' +
+                        '<p>' +
+                            '%introduction%' +
+                            '<br>' +
+                            '<a href="%href%" class="moreLink">&rarr; en savoir plus</a>' +
+                        '</p>' +
+                    '</section>' +
+                    '<div class="newBadge">New!</div>' +
+                '</article>',
+
+                tagElementPattern = '<li><a href="#" class="btn btn-small" data-filter=".%tag_slug%" >%tag%</a></li>',
+                trickPostTagPattern = '<a href="#" class="btn btn-small" >%tag%</a>';
+
+            var initTrickTags = function initTrickTags()
+            {
+                trickTags.unshift({name: "Nouveau"});
+                trickTags.forEach(function(trickTag) {
+                    var tagElement = tagElementPattern.replaceAll("%tag%", trickTag.name);
+                    tagElement = tagElement.replaceAll("%tag_slug%", trickTag.name.replaceAll(" ", "_"));
+                    $tagsContainer.append($(tagElement));
+                });
+            };
+
+            var initTrickPosts = function initTrickPosts()
+            {
+                for (var i = 0, c = trickPosts.length; i < c && i < defaultDisplayedTrickPosts; i++)
+                {
+                    addTrickPost(trickPosts[i]);
+                }
+
+                $('.trick-tags a').click(function(e) {
+                    e.preventDefault();
+                })
+            };
+
+            var addTrickPost = function addTrickPost(trickPost)
+            {
+                var isNew = trickPost.creationDate >= (Date.now() / 1000) - 604800;
+                var $trickPostTags = $("<div></div>");
+                var tags = "";
+                trickPost.tags.forEach(function(tag) {
+                    tags += tag.name.replaceAll(" ", "_") + " ";
+                    var trickPostTag = $(trickPostTagPattern.replaceAll("%tag%", tag.name));
+                    $trickPostTags.append(trickPostTag);
+                });
+
+                if (isNew) {
+                    tags += "Nouveau";
+                }
+                var image = pathToTrickImages + "/";
+                if (jQuery.isEmptyObject(trickPost.images)) {
+                    image += "../" + defaultTrickImage;
+                } else {
+                    image += trickPost.images[Object.keys(trickPost.images)[0]];
+                }
+
+                var displayedData = {
+                    tags: tags,
+                    image: image,
+                    creationDate: trickPost.creationDate,
+                    href: pathToView.replace("|id|", trickPost.id),
+                    title: trickPost.name,
+                    introduction: trickPost.introduction.length > 100 ? (trickPost.introduction.substring(0,100) + "...") : trickPost.introduction
+                };
+
+                var trickPostElement = trickPostElementPattern;
+
+                $.each(displayedData, function(key, element) {
+                    key = "%" + key + "%";
+                    trickPostElement = trickPostElement.replaceAll(key, element);
+                });
+
+                var $trickPostElement = $(trickPostElement);
+
+                $trickPostElement.find(".trick-tags").append($trickPostTags);
+                if (!isNew) {
+                    $trickPostElement.find(".newBadge").remove();
+                }
+
+                $trickPostsContainer.append($trickPostElement);
+            };
+
+            return {
+                init: function init()
+                {
+                    initTrickTags();
+                    initTrickPosts();
+                    initiatePrettyPhoto();
+                    initiateImageHower();
+                }
+            };
+        }());
+
+    </script>
 
 {% endblock %}
