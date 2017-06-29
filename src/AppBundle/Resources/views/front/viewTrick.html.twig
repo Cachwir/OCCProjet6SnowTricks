@@ -211,7 +211,6 @@
             var player_ready = false;
             function onYouTubeIframeAPIReady() {
                 YTplayer = new YT.Player('player', {
-                    videoId: "khNZswe_Lpk",
                     playerVars: {modestbranding: 1, rel: 0, controls: 1},
                     allowfullscreen: 1,
                     events: {
@@ -233,7 +232,8 @@
                 autoplay = autoplay === false ? autoplay : true;
                 $('.imgWrapper').fadeOut(300, function() {
                     YTplayer.stopVideo();
-                    YTplayer.playVideo($videoId);
+                    YTplayer.loadVideoById($videoId);
+                    YTplayer.playVideo();
                     if (!autoplay) {
                         YTplayer.stopVideo();
                     }
