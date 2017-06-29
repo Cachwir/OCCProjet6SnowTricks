@@ -1120,7 +1120,7 @@ function animateTxt(curSlide, action){
 	}else{
     
     // ul to select
-    var optionsList = '<option value="" selected>Navigate...</option>';
+    var optionsList = '<option value="" selected>Naviguer...</option>';
     $mainMenu.find('li').each(function() {
         var $this   = $(this),
         $anchor = $this.children('a'),

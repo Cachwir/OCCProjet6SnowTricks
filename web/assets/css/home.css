@@ -34,6 +34,32 @@
     }
 }
 
+@media (max-width: 979px) and (min-width: 768px) {
+    .top-panel {
+        padding-top: 13.5rem !important;
+    }
+}
+
+
+@media (max-width: 767px)
+{
+    #homeApp {
+        background-position: right bottom;
+        padding-bottom: 3rem;
+        background-size: cover;
+    }
+
+    .top-panel {
+        padding-top: 12rem !important;
+    }
+
+    .imgWrapperBottom img {
+        opacity: 0;
+        animation: surf 0.8s ease-out 0.5s forwards;
+        display: none;
+    }
+}
+
 /* Quote */
 .ctaBox blockquote {
     font-size: 1.65em;
@@ -52,12 +78,15 @@
 }
 
 /* Tricks list */
+nav#filter a {
+    margin: 2px 0;
+}
 .trick-post-section {
     position: relative;
 }
 
 .trick-post-section {
-    max-height: 80vh;
+    max-height: 70vh;
     overflow-y: auto !important;
 }
 
@@ -74,10 +103,25 @@
     color: #fff;
 }
 
+.trick-post-section {
+    max-height: 70vh;
+    overflow-y: auto !important;
+}
+
 @media (min-width: 1200px)
 {
     .isotopeItem.span4 {
         width: 365px;
+    }
+}
+
+@media (max-width: 767px)
+{
+    .trick-post-section {
+        max-height: none;
+        overflow-y: visible !important;
+        max-width: 400px;
+        margin: auto;
     }
 }
 
