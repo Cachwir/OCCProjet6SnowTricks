@@ -107,21 +107,35 @@ nav#filter a {
     }
 }
 
+.x0p.default .content {
+    padding: 0;
+}
 .isotopeItem .deleteBadge {
     background-color: #e9322d;
     cursor: pointer;
 }
-
-.x0p.default .content {
-   padding: 0;
-}
 .isotopeItem .newBadge + .deleteBadge {
     top: 70px;
 }
-.isotopeItem .deleteBadge i {
+.isotopeItem .editBadge {
+    background-color: #54dd44;
+    cursor: pointer;
+    top: 70px;
+}
+.isotopeItem .newBadge + .deleteBadge + .editBadge {
+    top: 135px;
+}
+.isotopeItem .deleteBadge i, .isotopeItem .editBadge i {
     color: inherit;
     font-size: 25px;
     line-height: 2em;
+}
+.isotopeItem .hoverBadge {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.isotopeItem:hover .hoverBadge {
+    opacity: 1;
 }
 
 @media (max-width: 767px)
