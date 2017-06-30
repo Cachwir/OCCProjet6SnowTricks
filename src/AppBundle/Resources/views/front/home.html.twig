@@ -112,8 +112,9 @@
                 pathToView = "{{ path("front_trick", {id: "|id|"}) }}",
                 defaultTrickImage = "default_trick_image.jpg",
                 defaultDisplayedTrickPosts = 100,
-                canDelete = {{ is_granted("ROLE_USER") ? "true" : "false" }},
+                canManageTrick = {{ is_granted("ROLE_USER") ? "true" : "false" }},
                 deleteUrl = "{{ url("front_delete_trick", {id: "|id|"}) }}",
+                editUrl = "{{ url("front_edit_trick", {id: "|id|"}) }}",
 
                 trickPostElementPattern = '' +
                 '<article class="boxLink boxNew span4 isotopeItem %tags%">' +
@@ -139,7 +140,8 @@
                         '</p>' +
                     '</section>' +
                     '<div class="newBadge newBadgeNew">New!</div>' +
-                    '<a href="%deleteUrl%" class="newBadge deleteBadge"><i class="icon-trash"></i></a>' +
+                    '<a href="%deleteUrl%" class="newBadge deleteBadge hoverBadge"><i class="icon-trash"></i></a>' +
+                    '<a href="%editUrl%" class="newBadge editBadge hoverBadge"><i class="icon-pencil"></i></a>' +
                 '</article>',
 
                 tagElementPattern = '<li><a href="#" class="btn btn-small" data-filter=".%tag_slug%" >%tag%</a></li>',
@@ -207,7 +209,8 @@
                     href: pathToView.replace("|id|", trickPost.id),
                     title: trickPost.name,
                     introduction: trickPost.introduction.length > 100 ? (trickPost.introduction.substring(0,100) + "...") : trickPost.introduction,
-                    deleteUrl: deleteUrl.replace("|id|", trickPost.id)
+                    deleteUrl: deleteUrl.replace("|id|", trickPost.id),
+                    editUrl: editUrl.replace("|id|", trickPost.id)
                 };
 
                 var trickPostElement = trickPostElementPattern;
@@ -223,8 +226,8 @@
                 if (!isNew) {
                     $trickPostElement.find(".newBadgeNew").remove();
                 }
-                if (!canDelete) {
-                    $trickPostElement.find(".deleteBadge").remove();
+                if (!canManageTrick) {
+                    $trickPostElement.find(".deleteBadge, .editBadge").remove();
                 }
 
                 $trickPostsContainer.append($trickPostElement);
