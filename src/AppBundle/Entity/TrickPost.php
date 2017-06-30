@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="trick_post")
- * @UniqueEntity(fields={"name"}, message="Ce nom est déjà pris par un autre trick.", groups={"Registration"})
+ * @UniqueEntity(fields={"name"}, message="Ce nom est déjà pris par un autre trick.")
  */
 class TrickPost implements \JsonSerializable
 {
@@ -262,6 +262,14 @@ class TrickPost implements \JsonSerializable
      */
     public function setImages($images)
     {
+        if (!empty($images)) {
+            foreach ($images as $key => $image) {
+                if ($image === null) {
+                    unset($images[$key]);
+                }
+            }
+        }
+
         $this->images = $images;
     }
 
@@ -278,6 +286,14 @@ class TrickPost implements \JsonSerializable
      */
     public function setVideos($videos)
     {
+        if (!empty($videos)) {
+            foreach ($videos as $key => $video) {
+                if ($video === null) {
+                    unset($videos[$key]);
+                }
+            }
+        }
+
         $this->videos = $videos;
     }
 

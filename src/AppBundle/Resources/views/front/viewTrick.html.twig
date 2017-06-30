@@ -89,6 +89,34 @@
                         <hr>
                         <section class="clearfix comments" id="comments">
                             <h3 class="commentNumbers">Commentaires {% if trickComments %}({{ trickComments|length }}){% endif %}</h3>
+                            {% if form is defined %}
+                                <h3 class="commentNumbers">Laisser un commentaire</h3>
+                                {{ form_start(form, {attr: {action: "#comments"}}) }}
+                                <div class="row">
+                                    <div class="span12">
+                                        {{ form_row(form.title) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span12">
+                                        {{ form_row(form.content) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span12">
+                                        <button class="btn btnMedium" type="submit" name="submitComment">Valider</button>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                            {% endif %}
+                            {% if not is_granted("ROLE_USER") and trickComments|length > 0 %}
+                                <div class="row">
+                                    <div class="span12">
+                                        <h4>Connecte-toi pour laisser un commentaire</h4>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <hr>
                             {% for trickComment in trickComments %}
                                 <div class="media">
                                     <a class="thumbnail user-avatar pull-left" href="#">
@@ -114,36 +142,7 @@
                                     {% endif %}
                                 </div>
                             {% endfor %}
-
                             <hr>
-
-                            {% if form is defined %}
-                                <h3 class="commentNumbers">Laisser un commentaire</h3>
-                                {{ form_start(form, {attr: {action: "#comments"}}) }}
-                                    <div class="row">
-                                        <div class="span12">
-                                            {{ form_row(form.title) }}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="span12">
-                                            {{ form_row(form.content) }}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="span12">
-                                            <button class="btn btnMedium" type="submit" name="submitComment">Valider</button>
-                                        </div>
-                                    </div>
-                                {{ form_end(form) }}
-                            {% endif %}
-                            {% if not is_granted("ROLE_USER") and trickComments|length > 0 %}
-                                <div class="row">
-                                    <div class="span12">
-                                        <h4>Connecte-toi pour laisser un commentaire</h4>
-                                    </div>
-                                </div>
-                            {% endif %}
                         </section>
                     </article>
                 </div>
