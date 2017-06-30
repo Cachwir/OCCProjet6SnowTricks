@@ -64,3 +64,7 @@ ul.entry-meta li.entry-edit a:focus, ul.entry-meta li.entry-edit a:hover {
 .comments .user-avatar img {
     display: inline-block;
 }
+
+.light-theme .current {
+    border-color: inherit;
+}

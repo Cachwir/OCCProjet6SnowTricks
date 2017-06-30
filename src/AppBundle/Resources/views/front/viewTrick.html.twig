@@ -117,31 +117,34 @@
                                 </div>
                             {% endif %}
                             <hr>
-                            {% for trickComment in trickComments %}
-                                <div class="media">
-                                    <a class="thumbnail user-avatar pull-left" href="#">
-                                        <div class="imgWrapper">
-                                            <img src="{{ pathToAvatars }}/{{ trickComment.author.avatar ? trickComment.author.avatar : "../default_avatar.png" }}" alt="" />
+                            <div class="trick-comments">
+                                {% for trickComment in trickComments %}
+                                    <div class="media trick-comment">
+                                        <a class="thumbnail user-avatar pull-left" href="#">
+                                            <div class="imgWrapper">
+                                                <img src="{{ pathToAvatars }}/{{ trickComment.author.avatar ? trickComment.author.avatar : "../default_avatar.png" }}" alt="" />
+                                            </div>
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="clearfix">
+                                                <h4 class="media-heading">{{ trickComment.title }}</h4>
+                                                <div class="commentInfo"> <span>{{ trickComment.publicationDate|date("d/m/Y à H:i") }}</span> </div>
+                                            </div>
+                                            {{ trickComment.content|nl2br }}
                                         </div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="clearfix">
-                                            <h4 class="media-heading">{{ trickComment.title }}</h4>
-                                            <div class="commentInfo"> <span>{{ trickComment.publicationDate|date("d/m/Y à H\h i") }}</span> </div>
-                                        </div>
-                                        {{ trickComment.content|nl2br }}
                                     </div>
-                                </div>
-                            {% else %}
-                                <div class="media">
-                                    Aucun commentaire.<br>
-                                    {% if is_granted("ROLE_USER") %}
-                                        Sois le premier à en laisser un !
-                                    {% else %}
-                                        Connecte-toi pour en laisser un.
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
+                                {% else %}
+                                    <div class="media">
+                                        Aucun commentaire.<br>
+                                        {% if is_granted("ROLE_USER") %}
+                                            Sois le premier à en laisser un !
+                                        {% else %}
+                                            Connecte-toi pour en laisser un.
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="pagination"></div>
                             <hr>
                         </section>
                     </article>
@@ -166,6 +169,39 @@
 
     <script>
 
+        var trickCommentsLen = {{ trickComments|length }};
+        var trickCommentsPerPage = 2;
+
+        $(document).ready(function() {
+
+            var trickCommentsLen = {{ trickComments|length }};
+
+            $(".pagination").pagination({
+                items: trickCommentsLen,
+                itemsOnPage: trickCommentsPerPage,
+                cssStyle: 'light-theme',
+                prevText: "Précédent",
+                nextText: "Suivant",
+                onPageClick: function onPageClick(pageNumber, event) {
+                    $('.trick-comments').fadeOut(300, function() {
+                        showTrickCommentPage(pageNumber);
+                        $('.trick-comments').fadeIn();
+                    });
+                }
+            });
+
+            showTrickCommentPage(1);
+        });
+
+        function showTrickCommentPage(page)
+        {
+            $('.trick-comment').hide();
+            $($('.trick-comment').slice((page - 1) * trickCommentsPerPage, page * trickCommentsPerPage)).show();
+        }
+
+    </script>
+
+    <script>
 
             $(document).ready(function() {
                 $('.thumbnail').click(function(e) {
@@ -229,7 +265,7 @@
 
             function playVideo($videoId, autoplay) {
                 autoplay = autoplay === false ? autoplay : true;
-                $('.imgWrapper').fadeOut(300, function() {
+                $('.front-media .imgWrapper').fadeOut(300, function() {
                     YTplayer.stopVideo();
                     YTplayer.loadVideoById($videoId);
                     YTplayer.playVideo();
@@ -238,18 +274,18 @@
                     }
                     $('.image_container').hide();
                     $('.video_container').show();
-                    $('.imgWrapper').fadeIn();
+                    $('.front-media .imgWrapper').fadeIn();
                 });
 
             }
             function displayImage($image) {
-                $('.imgWrapper').fadeOut(300, function() {
+                $('.front-media .imgWrapper').fadeOut(300, function() {
                     YTplayer.stopVideo();
                     var img = "<img src='"+ $image.attr("src") +"'>";
                     $('.image_container a').html($(img));
                     $('.image_container').show();
                     $('.video_container').hide();
-                    $('.imgWrapper').fadeIn();
+                    $('.front-media .imgWrapper').fadeIn();
                 });
             }
 
