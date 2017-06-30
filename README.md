@@ -1,6 +1,6 @@
 # OCCProjet6SnowTricks
 
-Projet n°6 du parcours Développeur PHP/Symfony : Creation of a snowboard tricks directory with a communication specificity
+Projet n°6 du parcours Développeur PHP/Symfony : Creation of a snowboard tricks directory with a communication specificity.
 
 Version 1.0
 
