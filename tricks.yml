@@ -1,0 +1,87 @@
+trick_mute_grab:
+    author: test+1@gmx.com
+    name: Mute
+    introduction: "Saisie de la carre frontside de la planche entre les deux pieds avec la main avant."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_sad_grab:
+    author: test+1@gmx.com
+    name: Sad
+    introduction: "Daisie de la carre backside de la planche, entre les deux pieds, avec la main avant."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_indy_grab:
+    author: test+1@gmx.com
+    name: Indy
+    introduction: "Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_stalefish_grab:
+    author: test+1@gmx.com
+    name: Stalefish
+    introduction: "Saisie de la carre backside de la planche entre les deux pieds avec la main arrière."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_nose_grab:
+    author: test+1@gmx.com
+    name: Nose Grab
+    introduction: "Saisie de la partie avant de la planche, avec la main avant."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_japan_grab:
+    author: test+1@gmx.com
+    name: Japan
+    introduction: "Saisie de l'avant de la planche, avec la main avant, du côté de la carre frontside."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab', 'Old school']
+trick_seat_belt_grab:
+    author: test+1@gmx.com
+    name: Seat Belt
+    introduction: "Saisie du carre frontside à l'arrière avec la main avant ."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+trick_truck_driver_grab:
+    author: test+1@gmx.com
+    name: Truck Driver
+    introduction: "Saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Grab']
+
+trick_rotation_frontside:
+    author: test+1@gmx.com
+    name: Rotation Frontside
+    introduction: "Une rotation frontside correspond à une rotation orientée vers la carre backside."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Rotation']
+trick_rotation_backside:
+    author: test+1@gmx.com
+    name: Rotation Backside
+    introduction: "Une rotation frontside correspond à une rotation orientée vers l'opposé de la carre backside."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Rotation']
+
+trick_front_flip:
+    author: test+1@gmx.com
+    name: Front Flip
+    introduction: "Les front flips sont des rotations verticales en avant."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Flip']
+trick_back_flip:
+    author: test+1@gmx.com
+    name: Back Flip
+    introduction: "Les front flips sont des rotations verticales en arrière."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Flip']
+
+trick_nose_slide:
+    author: test+1@gmx.com
+    name: Nose Slide
+    introduction: "Slide avec l'avant de la planche sur la barre."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Slide']
+trick_tail_slide:
+    author: test+1@gmx.com
+    name: Tail Slide
+    introduction: "Slide avec l'arrière de la planche sur la barre."
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a commodo enim. Nam porta nibh nec diam ultrices sollicitudin quis quis arcu. Sed finibus neque at nisl pellentesque imperdiet. Sed aliquet non mi a gravida. Quisque et ante condimentum ligula imperdiet posuere id eu mi. Morbi imperdiet magna turpis. Donec suscipit dapibus volutpat. Integer ut ante scelerisque, mattis neque ac, elementum urna. Sed nibh est, molestie quis malesuada a, facilisis eu libero. Curabitur neque mauris, maximus mollis lectus et, tempor fringilla tortor. Mauris pretium mollis malesuada. Aenean laoreet at turpis in tempor."
+    tags: ['Slide']
