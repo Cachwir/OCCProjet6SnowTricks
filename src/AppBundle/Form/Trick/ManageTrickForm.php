@@ -12,6 +12,7 @@ namespace AppBundle\Form\Trick;
 use AppBundle\Entity\TrickPost;
 use AppBundle\Entity\TrickTag;
 use AppBundle\Validator\Constraints\IsYoutubeUrl;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,22 +34,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Url;
 
-class ManageTrickForm extends AbstractType implements ContainerAwareInterface
+class ManageTrickForm extends AbstractType
 {
     /**
-     * @var ContainerInterface
+     * @var EntityManagerInterface
      */
-    private static $container;
+    private $em;
 
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct(EntityManagerInterface $em)
     {
-        self::$container = $container;
+        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $em = self::$container->get("doctrine.orm.entity_manager");
-        $trickTags = $em->getRepository("AppBundle:TrickTag")->findAll();
+        $trickTags = $this->em->getRepository("AppBundle:TrickTag")->findAll();
 
         $builder
             ->add('name', TextType::class, [

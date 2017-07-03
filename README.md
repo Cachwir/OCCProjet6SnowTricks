@@ -20,5 +20,6 @@ Author: Cachwir
 - feel parameters.yml with your own config
 - create your database using ./bin/console doctrine:schema:create
 - (optionnal) add default data using ./bin/console doctrine:fixtures:load
+- (optionnal) update tricks.yml and add/edit/remove the tricks you want. Then, run ./bin/console app:load-tricks to load them into the database
 - configure your virtual server if you need it. It needs to point to the web folder at the root of the project.
 - enjoy~
